@@ -12,10 +12,15 @@ export default function SignInForm() {
     email: "",
     password: "",
   });
+  const [rememberMe, setRememberMe] = useState(false);
   // Captures any error messages
   const [error, setError] = useState(null);
   // Tracks form submission state
   const [loading, setLoading] = useState(false);
+
+  function handleRememberMeChange(event) {
+    setRememberMe(event.target.checked);
+  }
 
   // Updates form data as user types
   function handleChange(event) {
@@ -39,6 +44,9 @@ export default function SignInForm() {
         await supabase.auth.signInWithPassword({
           email: formData.email,
           password: formData.password,
+          options: {
+            persistSession: rememberMe,
+          },
         });
 
       if (signInError) throw signInError;
@@ -110,6 +118,8 @@ export default function SignInForm() {
             id="remember-me"
             name="remember-me"
             type="checkbox"
+            checked={rememberMe}
+            onChange={handleRememberMeChange}
             className="h-4 w-4 text-[#A51C30] focus:ring-[#A51C30] border-gray-300 rounded"
           />
           <label

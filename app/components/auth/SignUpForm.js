@@ -85,7 +85,7 @@ export default function SignUpForm() {
       // Redirect after delay
       setTimeout(() => {
         router.push("/signin");
-      }, 2000);
+      }, 5000);
     } catch (error) {
       console.error("Error during sign up: ", error);
       setError(error.message || " An error occured during sign up");
