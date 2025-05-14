@@ -2,9 +2,12 @@
 
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function SignUpForm() {
+  // Define router
+  const router = useRouter();
   // formData stores all user input fields
   const [formData, setFormData] = useState({
     full_name: "",
@@ -36,10 +39,8 @@ export default function SignUpForm() {
   }
 
   // Processes form submission
-  async function handleSubmit() {
-    console.log("Running handleSubmit");
-
-    error.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
     setError(null);
     setLoading(true);
 
@@ -70,24 +71,21 @@ export default function SignUpForm() {
           role:
             parseInt(formData.graduation_year) >= new Date().getFullYear() &&
             parseInt(formData.graduation_year) <= new Date().getFullYear() + 4
-              ? "Current Player"
-              : "Alumni",
+              ? "current_player"
+              : "alumni",
         });
 
         if (profileError) throw profileError;
-        console.log("No profile error");
       }
 
       setSuccessMessage(
         "Account created successfully! Please check your email to confirm your account."
       );
 
-      console.log("Account created. Starting redirect");
-
       // Redirect after delay
       setTimeout(() => {
         router.push("/signin");
-      }, 5000);
+      }, 2000);
     } catch (error) {
       console.error("Error during sign up: ", error);
       setError(error.message || " An error occured during sign up");
@@ -204,7 +202,7 @@ export default function SignUpForm() {
             name="position"
             value={formData.position}
             onChange={handleChange}
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-[#A51C30]"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-gray-400 focus:outline-none focus:border-[#A51C30]"
           >
             <option value="">Select a position</option>
             <option value="Goalkeeper">Goalkeeper</option>
@@ -225,7 +223,7 @@ export default function SignUpForm() {
           {loading ? "Creating Account..." : "Sign Up"}
         </button>
       </div>
-      <div className="mt-2 text-sm text-center">
+      <div className="mt-2 text-sm text-center text-gray-400">
         Already have an account?{" "}
         <Link
           href="/signin"
