@@ -19,7 +19,7 @@ export default function ProtectedRoute({ children }) {
       router.push("/signin");
     }
 
-    if (user && (pathname === "/signin" || pathname === "signup")) {
+    if (user && (pathname === "/signin" || pathname === "/signup")) {
       router.push("/dashboard");
     }
   }, [user, loading, pathname, router]);

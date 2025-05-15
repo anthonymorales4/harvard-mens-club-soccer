@@ -18,7 +18,7 @@ export default function SignInPage() {
           Sign into your account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Welcome back to the Harvard Men's Club Soccer community
+          Welcome back to the Harvard Men&apos;s Club Soccer community
         </p>
       </div>
 
