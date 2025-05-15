@@ -28,7 +28,7 @@ export default function Home() {
             />
           </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Harvard Men's Club Soccer
+            Harvard Men&apos;s Club Soccer
           </h1>
           <p className="text-xl md:text-2xl mb-8 font-medium">
             Tradition. Excellence. Brotherhood.
@@ -59,10 +59,10 @@ export default function Home() {
             Your Digital Clubhouse
           </h2>
           <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
-            A private platform exclusively for Harvard Men's Club Soccer players
-            and alumni. Stay connected with the team, build relationships across
-            generations, and continue the legacy of excellence both on and off
-            the field.
+            A private platform exclusively for Harvard Men&apos;s Club Soccer
+            players and alumni. Stay connected with the team, build
+            relationships across generations, and continue the legacy of
+            excellence both on and off the field.
           </p>
           <div className="w-24 h-2 bg-[#A51C30] mx-auto mt-8 mb-4"></div>
           <p className="italic text-gray-600">
@@ -75,7 +75,7 @@ export default function Home() {
       <section className="py-16 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            What You'll Find Inside
+            What You&apos;ll Find Inside
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -222,9 +222,9 @@ export default function Home() {
               </svg>
 
               <div className="text-gray-700 text-lg italic mb-6 mt-4 pl-8">
-                "Being part of the Harvard Men's Club Soccer team has been the
-                highlight of my college experience. The bonds we've formed
-                extend far beyond the pitch."
+                &quot;Being part of the Harvard Men&apos;s Club Soccer team has
+                been the highlight of my college experience. The bonds
+                we&apos;ve formed extend far beyond the pitch.&quot;
               </div>
 
               <div className="flex items-center">
@@ -250,9 +250,10 @@ export default function Home() {
               </svg>
 
               <div className="text-gray-700 text-lg italic mb-6 mt-4 pl-8">
-                "The connections I made on this team have opened doors
+                &quot;The connections I made on this team have opened doors
                 throughout my career. Ten years later, I still count my
-                teammates among my closest friends and professional network."
+                teammates among my closest friends and professional
+                network.&quot;
               </div>
 
               <div className="flex items-center">
@@ -273,12 +274,13 @@ export default function Home() {
       <section className="py-16 px-6 bg-[#A51C30] text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Join Your Team's Digital Clubhouse
+            Join Your Team&apos;s Digital Clubhouse
           </h2>
 
           <p className="text-lg md:text-xl mb-8 opacity-90">
             Connect with teammates past and present, stay updated on team
-            activities, and be part of the Harvard Men's Club Soccer legacy.
+            activities, and be part of the Harvard Men&apos;s Club Soccer
+            legacy.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
@@ -301,8 +303,8 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-5 px-4 text-center text-sm">
         <p>
-          © {new Date().getFullYear()} Harvard Men's Club Soccer. All rights
-          reserved.
+          © {new Date().getFullYear()} Harvard Men&apos;s Club Soccer. All
+          rights reserved.
         </p>
       </footer>
     </div>
