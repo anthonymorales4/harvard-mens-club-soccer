@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const isProtectedRoute = pathname.startsWith("/dashboard");
+    const isProtectedRoute = pathname.startsWith("/team");
 
     if (loading) return;
 
@@ -20,7 +20,7 @@ export default function ProtectedRoute({ children }) {
     }
 
     if (user && (pathname === "/signin" || pathname === "/signup")) {
-      router.push("/dashboard");
+      router.push("/team");
     }
   }, [user, loading, pathname, router]);
 

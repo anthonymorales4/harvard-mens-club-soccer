@@ -54,7 +54,7 @@ export default function SignInForm() {
       console.log("Signed in successfully", data);
 
       // Redirect to dashboard on successful sign-in
-      router.push("/dashboard");
+      router.push("/team");
     } catch (error) {
       console.error("Error signing in", error);
       // Show error message on failure
