@@ -38,13 +38,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
             <Link
               href="/signin"
-              className="bg-white text-black hover:bg-gray-100 py-3 px-8 rounded-full font-medium transition-colors text-base sm:text-lg"
+              className="bg-white text-[#A51C30] hover:bg-gray-100 py-3 px-8 rounded-full font-medium transition-colors text-base sm:text-lg"
             >
               Sign In
             </Link>
             <Link
               href="/signup"
-              className="bg-white text-black hover:bg-gray-100 py-3 px-8 rounded-full font-medium transition-colors text-base sm:text-lg"
+              className="bg-[#A51C30] text-white hover:bg-[#8a1726] border border-white py-3 px-8 rounded-full font-medium transition-colors text-base sm:text-lg"
             >
               Join The Team
             </Link>

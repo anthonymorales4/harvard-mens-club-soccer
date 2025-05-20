@@ -14,7 +14,6 @@ export default function SignUpForm() {
     email: "",
     password: "",
     graduation_year: "",
-    position: "",
   });
 
   // Captures any errors
@@ -66,7 +65,6 @@ export default function SignUpForm() {
           id: authData.user.id,
           full_name: formData.full_name,
           graduation_year: parseInt(formData.graduation_year),
-          position: formData.position,
           email: formData.email,
           role:
             parseInt(formData.graduation_year) >= new Date().getFullYear() &&
@@ -189,29 +187,6 @@ export default function SignUpForm() {
         </div>
       </div>
 
-      <div>
-        <label
-          htmlFor="position"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Position
-        </label>
-        <div className="mt-1">
-          <select
-            id="position"
-            name="position"
-            value={formData.position}
-            onChange={handleChange}
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-gray-400 focus:outline-none focus:border-[#A51C30]"
-          >
-            <option value="">Select a position</option>
-            <option value="Goalkeeper">Goalkeeper</option>
-            <option value="Defense">Defender</option>
-            <option value="Midfielder">Midfielder</option>
-            <option value="Forward">Forward</option>
-          </select>
-        </div>
-      </div>
       <div className="mt-5">
         <button
           type="submit"
