@@ -2,7 +2,7 @@
 
 export default function RoleBadge({ role }) {
   // Determine badge color based on role
-  // Green for current players, bllue for alumni
+  // Green for current players, blue for alumni
   const badgeColors = {
     current_player: {
       bg: "bg-green-500",

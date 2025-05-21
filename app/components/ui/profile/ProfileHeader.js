@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import RoleBadge from "./RoleBadge";
+import ProfileImageUpload from "./ProfileImageUpload";
 
 export default function ProfileHeader({ profile, isEditing, onEditClick }) {
   if (!profile) return null;

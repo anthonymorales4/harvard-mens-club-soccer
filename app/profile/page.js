@@ -10,6 +10,7 @@ import AboutMeCard from "../components/ui/profile/AboutMeCard";
 import PersonalInfoCard from "../components/ui/profile/PersonalInfoCard";
 import ContactInfoCard from "../components/ui/profile/ContactInfoCard";
 import CareerInfoCard from "../components/ui/profile/CareerInfoCard";
+import ProfileEditForm from "../components/ui/profile/ProfileEditForm";
 
 export default function ProfilePage() {
   // State for profile data and edit mode
@@ -86,6 +87,12 @@ export default function ProfilePage() {
     setIsEditing(!isEditing);
   }
 
+  // Handle profile update
+  function handleProfileUpdate(updatedProfile) {
+    setProfile(updatedProfile);
+    setIsEditing(false);
+  }
+
   // Render loading state
   if (isLoading) {
     return (
@@ -140,22 +147,36 @@ export default function ProfilePage() {
             />
           </div>
 
-          {/* About Me */}
-          <div className="mt-6">
-            <AboutMeCard profile={profile} />
-          </div>
-
-          {/* Profile Information */}
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <PersonalInfoCard profile={profile} />
-            <ContactInfoCard profile={profile} />
-          </div>
-
-          {/* Career Information */}
-          {profile && profile.role === "alumni" && (
-            <div className="mt-6">
-              <CareerInfoCard profile={profile} />
+          {isEditing ? (
+            // Edit mode
+            <div>
+              <ProfileEditForm
+                profile={profile}
+                onCancel={handleToggleEdit}
+                onUpdate={handleProfileUpdate}
+              />
             </div>
+          ) : (
+            // View Mode
+            <>
+              {/* About Me */}
+              <div className="mt-6">
+                <AboutMeCard profile={profile} />
+              </div>
+
+              {/* Profile Information */}
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <PersonalInfoCard profile={profile} />
+                <ContactInfoCard profile={profile} />
+              </div>
+
+              {/* Career Information */}
+              {profile && profile.role === "alumni" && (
+                <div className="mt-6">
+                  <CareerInfoCard profile={profile} />
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
