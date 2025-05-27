@@ -18,7 +18,7 @@ export default function RoleBadge({ role }) {
   const { bg, text } = badgeColors[role];
 
   // Format the display text
-  const displayText = role === "current_player" ? "Player" : "Alumni";
+  const displayText = role === "current_player" ? "Player" : "Alumnus";
 
   return (
     <span

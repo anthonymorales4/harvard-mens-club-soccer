@@ -23,25 +23,32 @@ export default function ProfileHeader({ profile, isEditing, onEditClick }) {
   return (
     <div className="bg-white shadow rounded-lg overflow-hidden">
       <div className="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-        <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-[#A51C30]">
-          <Image
-            src={profileImage}
-            alt={full_name}
-            fill
-            className="object-cover"
+        {isEditing ? (
+          <ProfileImageUpload
+            userId={profile.id}
+            currentImageUrl={profile_image_url}
           />
-        </div>
+        ) : (
+          <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-[#A51C30]">
+            <Image
+              src={profileImage}
+              alt={full_name}
+              fill
+              className="object-cover"
+            />
+          </div>
+        )}
 
         {/* Profile Information */}
         <div className="flex-1 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">{full_name}</h1>
-              <h3 className="text-gray-500">Class of {graduation_year}</h3>
-              <i className="text-gray-800">{position}</i>
-
+              <h3 className="italic text-gray-800">
+                Class of {graduation_year}
+              </h3>
+              <p className="text-gray-500">{position}</p>
               <div className="mt-2 flex flex-wrap gap-2 justify-center sm:justify-start">
-                {/* Role Badge */}
                 <RoleBadge role={role} />
                 {isBoard && (
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">

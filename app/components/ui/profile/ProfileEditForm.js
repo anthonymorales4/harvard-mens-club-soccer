@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import ProfileImageUpload from "./ProfileImageUpload";
 import ProfileSection from "./ProfileSection";
 
 export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
@@ -60,14 +59,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  }
-
-  // Handle image upload
-  function handleImageUploaded(url) {
-    setFormData((prev) => ({
-      ...prev,
-      profile_image_url: url,
     }));
   }
 
@@ -140,7 +131,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
         </div>
       )}
 
-      {/* Bio Section */}
+      {/* About Me */}
       <div className="mt-6">
         <ProfileSection title="About Me">
           <div>

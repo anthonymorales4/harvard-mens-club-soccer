@@ -4,11 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 
-export default function ProfileImageUpload({
-  userId,
-  currentImageUrl,
-  onImageUploaded,
-}) {
+export default function ProfileImageUpload({ userId, currentImageUrl }) {
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(currentImageUrl || "");
   const [error, setError] = useState(null);
@@ -62,11 +58,18 @@ export default function ProfileImageUpload({
         data: { publicUrl },
       } = supabase.storage.from("profile-images").getPublicUrl(filePath);
 
+      // Update the profile in the database
+      const { error: updateError } = await supabase
+        .from("profiles")
+        .update({ profile_image_url: publicUrl })
+        .eq("id", userId);
+
+      if (updateError) throw updateError;
+
       // Update local state
       setImageUrl(publicUrl);
-
-      // Notify parent component
-      onImageUploaded(publicUrl);
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000);
     } catch (error) {
       console.error("Error uploading image:", error);
       setError(error.message);
