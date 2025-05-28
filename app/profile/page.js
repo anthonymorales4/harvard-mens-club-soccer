@@ -13,16 +13,13 @@ import CareerInfoCard from "../components/ui/profile/CareerInfoCard";
 import ProfileEditForm from "../components/ui/profile/ProfileEditForm";
 
 export default function ProfilePage() {
-  // State for profile data and edit mode
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState(null);
 
-  // Get user from AuthContext
   const { user } = useAuth();
 
-  // Fetch profile data on component mount
   useEffect(() => {
     async function fetchProfileData() {
       if (!user?.id) return;
@@ -31,7 +28,6 @@ export default function ProfilePage() {
         setIsLoading(true);
         setError(null);
 
-        // Query the profiles table for the current user
         const { data, error } = await supabase
           .from("profiles")
           .select("*")
@@ -40,10 +36,9 @@ export default function ProfilePage() {
 
         if (error) throw error;
 
-        // Update state with profile data
         setProfile(data);
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        console.error("Error fetching profile data: ", error);
         setError("Failed to load profile data. Please try again");
       } finally {
         setIsLoading(false);
@@ -53,11 +48,9 @@ export default function ProfilePage() {
     fetchProfileData();
   }, [user]);
 
-  // Calculate profile completion percentage
   function calculateProfileCompletion() {
     if (!profile) return 0;
 
-    // Define fields that count towards completion
     const fields = [
       "full_name",
       "email",
@@ -71,29 +64,24 @@ export default function ProfilePage() {
       "phone_number",
     ];
 
-    // Add career fields for alumni
     if (profile.role === "alumni") {
       fields.push("current_job, current_location");
     }
 
-    // Count completed fields
     const completedFields = fields.filter((field) => profile[field]);
 
     return Math.round((completedFields.length / fields.length) * 100);
   }
 
-  // Toggle edit mode
   function handleToggleEdit() {
     setIsEditing(!isEditing);
   }
 
-  // Handle profile update
   function handleProfileUpdate(updatedProfile) {
     setProfile(updatedProfile);
     setIsEditing(false);
   }
 
-  // Render loading state
   if (isLoading) {
     return (
       <>
@@ -105,7 +93,6 @@ export default function ProfilePage() {
     );
   }
 
-  // Render error state
   if (error) {
     return (
       <>
@@ -132,23 +119,18 @@ export default function ProfilePage() {
       <Navbar />
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Profile Header */}
           <ProfileHeader
             profile={profile}
             isEditing={isEditing}
             onEditClick={handleToggleEdit}
           />
-
-          {/* Profile Completion */}
           <div className="mt-6">
             <ProfileCompletionBar
               percentage={profileCompletionPercentage}
               profile={profile}
             />
           </div>
-
           {isEditing ? (
-            // Edit mode
             <div>
               <ProfileEditForm
                 profile={profile}
@@ -157,20 +139,14 @@ export default function ProfilePage() {
               />
             </div>
           ) : (
-            // View Mode
             <>
-              {/* About Me */}
               <div className="mt-6">
                 <AboutMeCard profile={profile} />
               </div>
-
-              {/* Profile Information */}
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <PersonalInfoCard profile={profile} />
                 <ContactInfoCard profile={profile} />
               </div>
-
-              {/* Career Information */}
               {profile && profile.role === "alumni" && (
                 <div className="mt-6">
                   <CareerInfoCard profile={profile} />

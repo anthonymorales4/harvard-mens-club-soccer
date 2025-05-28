@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import RoleBadge from "./RoleBadge";
-import ProfileImageUpload from "./ProfileImageUpload";
 
 export default function ProfileHeader({ profile, isEditing, onEditClick }) {
   if (!profile) return null;
@@ -23,23 +22,14 @@ export default function ProfileHeader({ profile, isEditing, onEditClick }) {
   return (
     <div className="bg-white shadow rounded-lg overflow-hidden">
       <div className="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-        {isEditing ? (
-          <ProfileImageUpload
-            userId={profile.id}
-            currentImageUrl={profile_image_url}
+        <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-[#A51C30]">
+          <Image
+            src={profileImage}
+            alt={full_name}
+            fill
+            className="object-cover"
           />
-        ) : (
-          <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-[#A51C30]">
-            <Image
-              src={profileImage}
-              alt={full_name}
-              fill
-              className="object-cover"
-            />
-          </div>
-        )}
-
-        {/* Profile Information */}
+        </div>
         <div className="flex-1 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -57,7 +47,6 @@ export default function ProfileHeader({ profile, isEditing, onEditClick }) {
                 )}
               </div>
             </div>
-
             <button
               onClick={onEditClick}
               className={`mt-4 sm:mt-0 ${

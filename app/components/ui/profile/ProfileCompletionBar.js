@@ -1,9 +1,7 @@
 "use client";
 
 export default function ProfileCompletionBar({ percentage, profile }) {
-  // Generate a suggestion based on missing fields
-  function getSuggestion() {
-    // Check for missing fields in order of importance
+  function getTip() {
     if (!profile.profile_image_url) return "Add a profile photo";
     if (!profile.bio) return "Add your bio";
     if (!profile.house) return "Add your house";
@@ -22,8 +20,7 @@ export default function ProfileCompletionBar({ percentage, profile }) {
     return "Your profile is looking great!";
   }
 
-  // Determine color based on completion percentage
-  function getColorClass() {
+  function getColor() {
     if (percentage < 30) return "bg-red-500";
     if (percentage < 70) return "bg-yellow-500";
     return "bg-green-500";
@@ -41,12 +38,12 @@ export default function ProfileCompletionBar({ percentage, profile }) {
       </div>
       <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
         <div
-          className={`${getColorClass()} h-2.5 rounded-full transition-all duration-500 ease-in-out`}
+          className={`${getColor()} h-2.5 rounded-full transition-all duration-500 ease-in-out`}
           style={{ width: `${percentage}%` }}
         ></div>
       </div>
       <p className="text-sm text-gray-600">
-        <span className="font-medium">Tip:</span> {getSuggestion()}
+        <span className="font-medium">Tip:</span> {getTip()}
       </p>
     </div>
   );

@@ -5,11 +5,9 @@ import ProfileSection from "./ProfileSection";
 export default function PersonalInfoCard({ profile }) {
   if (!profile) return null;
 
-  // Extract personal information
   const { house, concentration, hometown, final_club } = profile;
 
-  // Create an array of fields to display
-  const personalFields = [
+  const personalInfoFields = [
     {
       label: "House",
       value: house,
@@ -100,11 +98,9 @@ export default function PersonalInfoCard({ profile }) {
     },
   ];
 
-  // Filter out empty fields
-  const fieldsToDisplay = personalFields.filter((field) => field.value);
+  const fields = personalInfoFields.filter((field) => field.value);
 
-  // If no fields have values, show a message
-  if (fieldsToDisplay.length === 0) {
+  if (fields.length === 0) {
     return (
       <ProfileSection title="Personal Information">
         <p className="text-gray-500 italic">
@@ -117,7 +113,7 @@ export default function PersonalInfoCard({ profile }) {
   return (
     <ProfileSection title="Personal Information">
       <ul className="divide-y divide-gray-200">
-        {fieldsToDisplay.map((field, index) => (
+        {fields.map((field, index) => (
           <li key={index} className={`${index === 0 ? "" : "pt-4"} pb-4`}>
             <div className="flex items-center">
               <div className="flex-shrink-0">{field.icon}</div>

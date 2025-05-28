@@ -1,24 +1,20 @@
 "use client";
 
 export default function RoleBadge({ role }) {
-  // Determine badge color based on role
-  // Green for current players, blue for alumni
   const badgeColors = {
     current_player: {
-      bg: "bg-green-500",
-      text: "text-white",
+      bg: "bg-green-100",
+      text: "text-green-800",
     },
     alumni: {
-      bg: "bg-blue-500",
-      text: "text-white",
+      bg: "bg-blue-100",
+      text: "text-blue-800",
     },
   };
 
-  // Get the correct colors
   const { bg, text } = badgeColors[role];
 
-  // Format the display text
-  const displayText = role === "current_player" ? "Player" : "Alumnus";
+  const displayText = role === "current_player" ? "Player" : "Alumni";
 
   return (
     <span

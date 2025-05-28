@@ -9,7 +9,6 @@ export default function Navbar() {
   const { user, signOut } = useAuth();
   const pathname = usePathname();
 
-  // Extract user information
   let userDisplay = "";
   if (user?.profile?.full_name) {
     const nameParts = user.profile.full_name.split(" ");
@@ -20,7 +19,6 @@ export default function Navbar() {
     userDisplay = `${firstName} ${lastInital}. ${gradYear}`;
   }
 
-  // Navigation items with their paths and icons
   const navItems = [
     {
       name: "Team",
@@ -108,7 +106,6 @@ export default function Navbar() {
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          {/* Logo */}
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/team">
@@ -121,8 +118,6 @@ export default function Navbar() {
                 />
               </Link>
             </div>
-
-            {/* Navigation Links */}
             <div className="hidden sm:ml-6 sm:flex space-x-8">
               {navItems.map((item) => (
                 <Link
@@ -143,8 +138,6 @@ export default function Navbar() {
               ))}
             </div>
           </div>
-
-          {/* User Information and Sign Out */}
           <div className="flex items-center">
             {user && (
               <div className="flex items-center">

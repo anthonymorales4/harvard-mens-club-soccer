@@ -5,13 +5,10 @@ import ProfileSection from "./ProfileSection";
 export default function CareerInfoCard({ profile }) {
   if (!profile || profile.role !== "alumni") return null;
 
-  // Extract career information
   const { current_job, current_location } = profile;
 
-  // Check if we have any career info to display
   const hasCareerInfo = current_job || current_location;
 
-  // If no career info, display a message
   if (!hasCareerInfo) {
     return (
       <ProfileSection title="Career Information">

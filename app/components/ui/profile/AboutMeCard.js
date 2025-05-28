@@ -11,7 +11,6 @@ export default function AboutMeCard({ profile }) {
     <ProfileSection title="About Me">
       {bio ? (
         <div className="prose prose-sm max-w-none">
-          {/* Display paragraphs properly */}
           {bio.split("\n").map((paragraph, index) => (
             <p key={index} className="mb-2 text-gray-700">
               {paragraph}

@@ -28,10 +28,8 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  // Update form data when profile changes
   useEffect(() => {
     if (profile) {
-      // Initialize form with profile data
       setFormData({
         full_name: profile.full_name || "",
         email: profile.email || "",
@@ -53,9 +51,9 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
     }
   }, [profile]);
 
-  // Handle form input changes
-  function handleChange(e) {
-    const { name, value } = e.target;
+  function handleChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -69,27 +67,24 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
     setSuccess(false);
 
     try {
-      // Format graduation year as number
-      const dataToSubmit = {
+      const savedData = {
         ...formData,
         graduation_year: formData.graduation_year
           ? parseInt(formData.graduation_year)
           : null,
       };
 
-      // Update profile in Supabase
       const { error } = await supabase
         .from("profiles")
-        .update(dataToSubmit)
+        .update(savedData)
         .eq("id", profile.id);
 
       if (error) throw error;
 
-      // Set profile as completed if enough fields are filled
-      const fieldsCount = Object.values(dataToSubmit).filter(Boolean).length;
-      const requireFieldsCount = profile.role === "alumni" ? 8 : 6;
+      const completedFields = Object.values(savedData).filter(Boolean).length;
+      const totalNumFields = profile.role === "alumni" ? 8 : 6;
 
-      if (fieldsCount === requireFieldsCount) {
+      if (completedFields === totalNumFields) {
         await supabase
           .from("profiles")
           .update({ profile_completed: true })
@@ -98,15 +93,14 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
 
       setSuccess(true);
 
-      // Notify parent component
       if (onUpdate) {
         onUpdate({
           ...profile,
-          ...dataToSubmit,
+          ...savedData,
         });
       }
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error("Error updating profile: ", error);
       setError(error.message);
     } finally {
       setIsLoading(false);
@@ -117,21 +111,16 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* Error message */}
       {error && (
         <div className="bg-red-50 p-4 rounded-md text-red-700">
           <p>{error}</p>
         </div>
       )}
-
-      {/* Success message */}
       {success && (
         <div className="bg-green-50 p-4 rounded-md text-green-700">
           <p>Profile updated successfully!</p>
         </div>
       )}
-
-      {/* About Me */}
       <div className="mt-6">
         <ProfileSection title="About Me">
           <div>
@@ -147,8 +136,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
           </div>
         </ProfileSection>
       </div>
-
-      {/* Profile Information */}
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         <ProfileSection title="Personal Information">
           <div className="space-y-4">
@@ -169,7 +156,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 placeholder="e.g., Defender"
               />
             </div>
-
             <div>
               <label
                 htmlFor="board_position"
@@ -205,7 +191,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 placeholder="e.g., Kirkland House"
               />
             </div>
-
             <div>
               <label
                 htmlFor="concentration"
@@ -223,7 +208,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 placeholder="e.g., Computer Science"
               />
             </div>
-
             <div>
               <label
                 htmlFor="hometown"
@@ -241,7 +225,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 placeholder="e.g., Bay Shore, NY"
               />
             </div>
-
             <div>
               <label
                 htmlFor="final_club"
@@ -261,8 +244,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
             </div>
           </div>
         </ProfileSection>
-
-        {/* Contact Information Card */}
         <ProfileSection title="Contact Information">
           <div className="space-y-4">
             <div>
@@ -281,7 +262,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
               />
             </div>
-
             <div>
               <label
                 htmlFor="phone_number"
@@ -298,7 +278,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
               />
             </div>
-
             <div>
               <label
                 htmlFor="linkedin_url"
@@ -318,8 +297,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
           </div>
         </ProfileSection>
       </div>
-
-      {/* Career Information */}
       {profile.role === "alumni" && (
         <div className="mt-6">
           <ProfileSection title="Career Information">
@@ -341,7 +318,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                   placeholder="e.g., Software Engineer"
                 />
               </div>
-
               <div>
                 <label
                   htmlFor="current_location"
@@ -363,8 +339,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
           </ProfileSection>
         </div>
       )}
-
-      {/* Form Actions */}
       <div className="mt-6 flex justify-end space-x-3">
         <button
           type="button"

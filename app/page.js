@@ -4,9 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen grid grid-rows-[auto_1fr_auto] font-[family-name:var(--font-geist-sans)]">
-      {/* Hero Section */}
       <section className="relative w-full h-[85vh] flex flex-col items-center justify-center overflow-hidden">
-        {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/team-photos/HarvardBrown2023.JPG"
@@ -16,8 +14,6 @@ export default function Home() {
             className="object-cover brightness-[0.65]"
           />
         </div>
-
-        {/* Content Overlay */}
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <div className="mb-6 flex justify-center">
             <Image
@@ -33,8 +29,6 @@ export default function Home() {
           <p className="text-xl md:text-2xl mb-8 font-medium">
             Tradition. Excellence. Brotherhood.
           </p>
-
-          {/* CTA */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
             <Link
               href="/signin"
@@ -51,8 +45,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Brief Overview / Value Proposition */}
       <section className="py-16 px-6 bg-white">
         <div className="max-4-wl mx-auto text-center">
           <h2 className="text-3xl md:text=4xl font-bold mb-6 text-gray-800">
@@ -70,16 +62,12 @@ export default function Home() {
           </p>
         </div>
       </section>
-
-      {/* Feature Preview Cards */}
       <section className="py-16 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
             What You&apos;ll Find Inside
           </h2>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Team Updates Card */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
               <div className="h-3 bg-[#A51C30]"></div>
               <div className="p-6">
@@ -108,8 +96,6 @@ export default function Home() {
                 </p>
               </div>
             </div>
-
-            {/* Alumni Networking Card */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
               <div className="h-3 bg-[#A51C30]"></div>
               <div className="p-6">
@@ -138,8 +124,6 @@ export default function Home() {
                 </p>
               </div>
             </div>
-
-            {/* Team History Card */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
               <div className="h-3 bg-[#A51C30]"></div>
               <div className="p-6">
@@ -168,8 +152,6 @@ export default function Home() {
                 </p>
               </div>
             </div>
-
-            {/* Events Card */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
               <div className="h-3 bg-[#A51C30]"></div>
               <div className="p-6">
@@ -201,16 +183,12 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Testimonials/Quotes Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
             From Our Community
           </h2>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {/* Current Player Quote */}
             <div className="bg-gray-50 p-8 rounded-lg relative">
               <svg
                 className="absolute text-[#A51C30] w-12 h-12 top-4 left-4 opacity-20"
@@ -220,13 +198,11 @@ export default function Home() {
               >
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
               </svg>
-
               <div className="text-gray-700 text-lg italic mb-6 mt-4 pl-8">
                 &quot;Being part of the Harvard Men&apos;s Club Soccer team has
                 been the highlight of my college experience. The bonds
                 we&apos;ve formed extend far beyond the pitch.&quot;
               </div>
-
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-[#A51C30] rounded-full flex items-center justify-center text-white font-bold">
                   JM
@@ -237,8 +213,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-            {/* Alumni Quote */}
             <div className="bg-gray-50 p-8 rounded-lg relative">
               <svg
                 className="absolute text-[#A51C30] w-12 h-12 top-4 left-4 opacity-20"
@@ -248,14 +222,12 @@ export default function Home() {
               >
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
               </svg>
-
               <div className="text-gray-700 text-lg italic mb-6 mt-4 pl-8">
                 &quot;The connections I made on this team have opened doors
                 throughout my career. Ten years later, I still count my
                 teammates among my closest friends and professional
                 network.&quot;
               </div>
-
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-[#A51C30] rounded-full flex items-center justify-center text-white font-bold">
                   DR
@@ -269,20 +241,16 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Final CTA */}
       <section className="py-16 px-6 bg-[#A51C30] text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Join Your Team&apos;s Digital Clubhouse
           </h2>
-
           <p className="text-lg md:text-xl mb-8 opacity-90">
             Connect with teammates past and present, stay updated on team
             activities, and be part of the Harvard Men&apos;s Club Soccer
             legacy.
           </p>
-
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
             <Link
               href="/signin"
@@ -299,8 +267,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
       <footer className="py-5 px-4 text-center text-sm">
         <p>
           © {new Date().getFullYear()} Harvard Men&apos;s Club Soccer. All

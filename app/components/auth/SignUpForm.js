@@ -6,46 +6,33 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function SignUpForm() {
-  // Define router
   const router = useRouter();
-  // formData stores all user input fields
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
     password: "",
     graduation_year: "",
   });
-
-  // Captures any errors
   const [error, setError] = useState(null);
-  // Tracks form submission state
   const [loading, setLoading] = useState(false);
-  // Displays confirmation after successful signup
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Updates formData state as user types
   function handleChange(event) {
-    // const { name, value } = event.target
-    // name = full_name
     const name = event.target.name;
-    // value -> Whatever the user is currently typing
     const value = event.target.value;
-    // Use spread operator to copy existing object stored in local state
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   }
 
-  // Processes form submission
   async function handleSubmit(event) {
     event.preventDefault();
     setError(null);
     setLoading(true);
 
     try {
-      // Create new auth user in Supabase
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -55,14 +42,11 @@ export default function SignUpForm() {
         },
       });
 
-      console.log("authData", authData);
+      if (error) throw error;
 
-      if (authError) throw authError;
-
-      if (authData?.user) {
-        // Create profile record in database
-        const { error: profileError } = await supabase.from("profiles").insert({
-          id: authData.user.id,
+      if (data?.user) {
+        const { error } = await supabase.from("profiles").insert({
+          id: data.user.id,
           full_name: formData.full_name,
           graduation_year: parseInt(formData.graduation_year),
           email: formData.email,
@@ -73,20 +57,18 @@ export default function SignUpForm() {
               : "alumni",
         });
 
-        if (profileError) throw profileError;
+        if (error) throw error;
       }
 
       setSuccessMessage(
         "Account created successfully! Please check your email to confirm your account."
       );
-
-      // Redirect after delay
       setTimeout(() => {
         router.push("/signin");
       }, 5000);
     } catch (error) {
-      console.error("Error during sign up: ", error);
-      setError(error.message || " An error occured during sign up");
+      console.error("Error signing up: ", error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -99,13 +81,11 @@ export default function SignUpForm() {
           <p>{error}</p>
         </div>
       )}
-
       {successMessage && (
         <div>
           <p>{successMessage}</p>
         </div>
       )}
-
       <div>
         <label
           htmlFor="full_name"
@@ -165,7 +145,6 @@ export default function SignUpForm() {
           />
         </div>
       </div>
-
       <div>
         <label
           htmlFor="graduation_year"
@@ -186,7 +165,6 @@ export default function SignUpForm() {
           />
         </div>
       </div>
-
       <div className="mt-5">
         <button
           type="submit"

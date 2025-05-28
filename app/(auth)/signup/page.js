@@ -18,11 +18,10 @@ export default function SignUpPage() {
           Join the team
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Create an account to connect with the Harvard Men's Club Soccer
+          Create an account to connect with the Harvard Men&apos;s Club Soccer
           community
         </p>
       </div>
-
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <SignUpForm />

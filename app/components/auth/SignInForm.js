@@ -7,22 +7,13 @@ import { useState } from "react";
 
 export default function SignInForm() {
   const router = useRouter();
-  // Stores email and password
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [rememberMe, setRememberMe] = useState(false);
-  // Captures any error messages
   const [error, setError] = useState(null);
-  // Tracks form submission state
   const [loading, setLoading] = useState(false);
 
-  function handleRememberMeChange(event) {
-    setRememberMe(event.target.checked);
-  }
-
-  // Updates form data as user types
   function handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
@@ -32,33 +23,23 @@ export default function SignInForm() {
     }));
   }
 
-  // Processes form submission
   async function handleSubmit(event) {
     event.preventDefault();
     setError(null);
     setLoading(true);
 
     try {
-      const { data, error: signInError } =
-        // Authenticates the user
-        await supabase.auth.signInWithPassword({
-          email: formData.email,
-          password: formData.password,
-          options: {
-            persistSession: rememberMe,
-          },
-        });
+      const { error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
 
-      if (signInError) throw signInError;
+      if (error) throw error;
 
-      console.log("Signed in successfully", data);
-
-      // Redirect to dashboard on successful sign-in
       router.push("/team");
     } catch (error) {
-      console.error("Error signing in", error);
-      // Show error message on failure
-      setError(error.message || "Invalid email or password");
+      console.error("Error signing in: ", error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -71,7 +52,6 @@ export default function SignInForm() {
           <p>{error}</p>
         </div>
       )}
-
       <div>
         <label
           htmlFor="email"
@@ -113,23 +93,6 @@ export default function SignInForm() {
         </div>
       </div>
       <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <input
-            id="remember-me"
-            name="remember-me"
-            type="checkbox"
-            checked={rememberMe}
-            onChange={handleRememberMeChange}
-            className="h-4 w-4 text-[#A51C30] focus:ring-[#A51C30] border-gray-300 rounded"
-          />
-          <label
-            htmlFor="remember-me"
-            className="ml-2 block text-sm text-gray-700"
-          >
-            Remember me
-          </label>
-        </div>
-
         <div className="text-sm">
           <a
             href="#"
@@ -139,7 +102,6 @@ export default function SignInForm() {
           </a>
         </div>
       </div>
-
       <div>
         <button
           type="submit"
@@ -151,7 +113,6 @@ export default function SignInForm() {
           {loading ? "Signing in..." : "Sign in"}
         </button>
       </div>
-
       <div className="text-sm text-center text-gray-400">
         Don&apos;t have an account?{" "}
         <Link

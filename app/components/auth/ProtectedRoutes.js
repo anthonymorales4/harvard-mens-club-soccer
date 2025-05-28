@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/app/context/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 
 export default function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -14,7 +14,6 @@ export default function ProtectedRoute({ children }) {
 
     if (loading) return;
 
-    // If not authenticated and trying to access protected route
     if (!user && isProtectedRoute) {
       router.push("/signin");
     }
