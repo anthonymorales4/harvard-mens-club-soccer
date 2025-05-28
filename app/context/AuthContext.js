@@ -8,10 +8,12 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function getInitialSession() {
       setLoading(true);
+      setError(null);
 
       try {
         const {
@@ -20,11 +22,13 @@ export function AuthProvider({ children }) {
 
         if (session) {
           setUser(session.user);
-          const { data } = await supabase
+          const { data, error } = await supabase
             .from("profiles")
             .select("*")
             .eq("id", session.user.id)
             .single();
+
+          if (error) throw error;
 
           if (data) {
             setUser((currentUser) => ({
@@ -37,6 +41,7 @@ export function AuthProvider({ children }) {
         }
       } catch (error) {
         console.error("Error getting initial session: ", error);
+        setError(error.message);
         setUser(null);
       } finally {
         setLoading(false);
@@ -67,7 +72,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, signOut }}>
+    <AuthContext.Provider value={{ user, loading, error, signOut }}>
       {children}
     </AuthContext.Provider>
   );

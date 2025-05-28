@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { supabase } from "@/lib/supabase";
 import Navbar from "../components/layout/Navbar";
 import ProfileHeader from "../components/ui/profile/ProfileHeader";
 import ProfileCompletionBar from "../components/ui/profile/ProfileCompletionBar";
@@ -14,38 +13,14 @@ import ProfileEditForm from "../components/ui/profile/ProfileEditForm";
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [error, setError] = useState(null);
 
-  const { user } = useAuth();
+  const { user, loading, error } = useAuth();
 
   useEffect(() => {
-    async function fetchProfileData() {
-      if (!user?.id) return;
-
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("id", user.id)
-          .single();
-
-        if (error) throw error;
-
-        setProfile(data);
-      } catch (error) {
-        console.error("Error fetching profile data: ", error);
-        setError("Failed to load profile data. Please try again");
-      } finally {
-        setIsLoading(false);
-      }
+    if (user?.profile) {
+      setProfile(user.profile);
     }
-
-    fetchProfileData();
   }, [user]);
 
   function calculateProfileCompletion() {
@@ -82,7 +57,7 @@ export default function ProfilePage() {
     setIsEditing(false);
   }
 
-  if (isLoading) {
+  if (loading) {
     return (
       <>
         <Navbar />
@@ -124,12 +99,14 @@ export default function ProfilePage() {
             isEditing={isEditing}
             onEditClick={handleToggleEdit}
           />
-          <div className="mt-6">
-            <ProfileCompletionBar
-              percentage={profileCompletionPercentage}
-              profile={profile}
-            />
-          </div>
+          {profile && (
+            <div className="mt-6">
+              <ProfileCompletionBar
+                percentage={profileCompletionPercentage}
+                profile={profile}
+              />
+            </div>
+          )}
           {isEditing ? (
             <div>
               <ProfileEditForm
@@ -139,20 +116,22 @@ export default function ProfilePage() {
               />
             </div>
           ) : (
-            <>
-              <div className="mt-6">
-                <AboutMeCard profile={profile} />
-              </div>
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <PersonalInfoCard profile={profile} />
-                <ContactInfoCard profile={profile} />
-              </div>
-              {profile && profile.role === "alumni" && (
+            profile && (
+              <>
                 <div className="mt-6">
-                  <CareerInfoCard profile={profile} />
+                  <AboutMeCard profile={profile} />
                 </div>
-              )}
-            </>
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <PersonalInfoCard profile={profile} />
+                  <ContactInfoCard profile={profile} />
+                </div>
+                {profile && profile.role === "alumni" && (
+                  <div className="mt-6">
+                    <CareerInfoCard profile={profile} />
+                  </div>
+                )}
+              </>
+            )
           )}
         </div>
       </div>
