@@ -40,11 +40,15 @@ export default function ProfileHeader({ profile, isEditing, onEditClick }) {
               <p className="text-gray-500">{position}</p>
               <div className="mt-2 flex flex-wrap gap-2 justify-center sm:justify-start">
                 <RoleBadge role={role} />
-                {isBoard && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
-                    {board_position}
-                  </span>
-                )}
+                {isBoard &&
+                  board_position.split(",").map((position, index) => (
+                    <span
+                      key={index}
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800"
+                    >
+                      {position}
+                    </span>
+                  ))}
               </div>
             </div>
             <button
