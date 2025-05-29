@@ -84,8 +84,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
     switch (name) {
       case "phone_number":
         if (!validatePhoneNumber(value)) {
-          errors.phone_number =
-            "Please enter a valid phone number (e.g., (347) 891-6780)";
+          errors.phone_number = "Please enter a valid phone number";
         } else {
           delete errors.phone_number;
         }
@@ -93,8 +92,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
 
       case "linkedin_url":
         if (!validateLinkedInUrl(value)) {
-          errors.linkedin_url =
-            "Please enter a valid LinkedIn URL (e.g., https://www.linkedin.com/in/anthony-morales-2070a51bb/)";
+          errors.linkedin_url = "Please enter a valid LinkedIn URL";
         } else {
           delete errors.linkedin_url;
         }
@@ -102,8 +100,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
 
       case "instagram_url":
         if (!validateInstagramUrl(value)) {
-          errors.instagram_url =
-            "Please enter a valid Instagram URL (e.g., https://www.instagram.com/anthonymorales._/?next=%2F&hl=en-gb)";
+          errors.instagram_url = "Please enter a valid Instagram URL";
         } else {
           delete errors.instagram_url;
         }
@@ -210,18 +207,6 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
     } finally {
       setIsLoading(false);
     }
-  }
-
-  function getInputClass(fieldName) {
-    const baseClass = "mt-1 block w-full rounded-md shadow-sm sm:text-sm";
-    const normalClass =
-      "border-gray-300 focus:border-[#A51C30] focus:ring-[#A51C30]";
-    const errorClass =
-      "border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500";
-
-    return `${baseClass} ${
-      validationErrors[fieldName] ? errorClass : normalClass
-    }`;
   }
 
   if (!profile) return null;
@@ -393,8 +378,8 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 value={formData.phone_number}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className={getInputClass("phone_number")}
-                placeholder="(347) 891-6780"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                placeholder="e.g., (347) 891-6780"
               />
               {validationErrors.phone_number && (
                 <p className="mt-1 text-sm text-red-600">
@@ -416,8 +401,8 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 value={formData.instagram_url}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className={getInputClass("instagram_url")}
-                placeholder="https://www.instagram.com/anthonymorales._/?next=%2F&hl=en-gb"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                placeholder="e.g., https://www.instagram.com/anthonymorales._"
               />
               {validationErrors.instagram_url && (
                 <p className="mt-1 text-sm text-red-600">
@@ -439,8 +424,8 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 value={formData.linkedin_url}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className={getInputClass("linkedin_url")}
-                placeholder="https://www.linkedin.com/in/anthony-morales-2070a51bb/"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                placeholder="https://www.linkedin.com/in/anthony-morales/"
               />
               {validationErrors.linkedin_url && (
                 <p className="mt-1 text-sm text-red-600">
