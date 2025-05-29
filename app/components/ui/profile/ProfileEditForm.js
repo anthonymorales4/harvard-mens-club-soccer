@@ -5,6 +5,66 @@ import { supabase } from "@/lib/supabase";
 import ProfileSection from "./ProfileSection";
 
 export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
+  const POSITION_OPTIONS = [
+    { value: "", label: "Select Position" },
+    { value: "Goalkeeper", label: "Goalkeeper" },
+    { value: "Defender", label: "Defender" },
+    { value: "Midfielder", label: "Midfielder" },
+    { value: "Forward", label: "Forward" },
+  ];
+
+  const BOARD_POSITION_OPTIONS = [
+    { value: "Captain", label: "Captain" },
+    { value: "President", label: "President" },
+    { value: "Treasurer", label: "Treasurer" },
+    { value: "Social Chair", label: "Social Chair" },
+  ];
+
+  const HOUSE_OPTIONS = [
+    { value: "", label: "Select House" },
+    { value: "Quincy", label: "Quincy" },
+    { value: "Adams", label: "Adams" },
+    { value: "Kirkland", label: "Kirkland" },
+    { value: "Eliot", label: "Eliot" },
+    { value: "Dunster", label: "Dunster" },
+    { value: "Leverett", label: "Leverett" },
+    { value: "Lowell", label: "Lowell" },
+    { value: "Mather", label: "Mather" },
+    { value: "Winthrop", label: "Winthrop" },
+    { value: "Cabot", label: "Cabot" },
+    { value: "Currier", label: "Currier" },
+    { value: "Pforzheimer", label: "Pforzheimer" },
+    { value: "Canaday", label: "Canaday" },
+    { value: "Grays", label: "Grays" },
+    { value: "Greenough", label: "Greenough" },
+    { value: "Hollis", label: "Hollis" },
+    { value: "Holworthy", label: "Holworthy" },
+    { value: "Hurlbut", label: "Hurlbut" },
+    { value: "Lionel", label: "Lionel" },
+    { value: "Mower", label: "Mower" },
+    { value: "Massachusetts Hall", label: "Massachusetts Hall" },
+    { value: "Matthews", label: "Matthews" },
+    { value: "Pennypacker", label: "Pennypacker" },
+    { value: "Stoughton", label: "Stoughton" },
+    { value: "Straus", label: "Straus" },
+    { value: "Thayer", label: "Thayer" },
+    { value: "Weld", label: "Weld" },
+    { value: "Wigglesworth", label: "Wigglesworth" },
+  ];
+
+  const FINAL_CLUB_OPTIONS = [
+    { value: "", label: "Select Final Club" },
+    { value: "Fly Club", label: "Fly Club" },
+    { value: "Spee Club", label: "Spee Club" },
+    { value: "Porcellian Club", label: "Porcellian Club" },
+    { value: "A.D. Club", label: "A.D. Club" },
+    { value: "Phoenix S.K. Club", label: "Phoenix S.K. Club" },
+    { value: "Owl Club", label: "Owl Club" },
+    { value: "Delphic Club", label: "Delphic Club" },
+    { value: "Fox Club", label: "Fox Club" },
+    { value: "Sab Club", label: "Sab Club" },
+  ];
+
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -18,7 +78,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
     current_job: "",
     current_company: "",
     current_location: "",
-    board_position: "",
+    board_position: [],
     bio: "",
     linkedin_url: "",
     instagram_url: "",
@@ -45,7 +105,9 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
         current_job: profile.current_job || "",
         current_company: profile.current_company || "",
         current_location: profile.current_location || "",
-        board_position: profile.board_position || "",
+        board_position: profile.board_position
+          ? profile.board_position.split(", ")
+          : [],
         bio: profile.bio || "",
         linkedin_url: profile.linkedin_url || "",
         instagram_url: profile.instagram_url || "",
@@ -144,8 +206,25 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
       ...prev,
       [name]: value,
     }));
+  }
 
-    validateField(name, value);
+  function handleBoardPositionChange(position) {
+    setFormData((prev) => {
+      const currentPositions = prev.board_position;
+      const isSelected = currentPositions.includes(position);
+
+      if (isSelected) {
+        return {
+          ...prev,
+          board_position: currentPositions.filter((p) => p !== position),
+        };
+      } else {
+        return {
+          ...prev,
+          board_position: [...currentPositions, position],
+        };
+      }
+    });
   }
 
   function handleBlur(event) {
@@ -173,6 +252,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
         graduation_year: formData.graduation_year
           ? parseInt(formData.graduation_year)
           : null,
+        board_position: formData.board_position.join(", "),
       };
 
       const { error } = await supabase
@@ -248,34 +328,43 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
               >
                 Position
               </label>
-              <input
-                type="text"
+              <select
                 name="position"
                 id="position"
                 value={formData.position}
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
-                placeholder="e.g., Defender"
-              />
+              >
+                {POSITION_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label
                 htmlFor="board_position"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Board Position
               </label>
-              <input
-                type="text"
-                name="board_position"
-                id="board_position"
-                value={formData.board_position}
-                onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
-                placeholder="e.g., Captain"
-              />
+              <div className="space-y-2">
+                {BOARD_POSITION_OPTIONS.map((option) => (
+                  <label key={option.value} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={formData.board_position.includes(option.value)}
+                      onChange={() => handleBoardPositionChange(option.value)}
+                      className="h-4 w-4 text-[#A51C30] focus:ring-[#A51C30] border-gray-300 rounded"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">
+                      {option.label}
+                    </span>
+                  </label>
+                ))}
+              </div>
             </div>
-
             <div>
               <label
                 htmlFor="house"
@@ -283,15 +372,19 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
               >
                 House
               </label>
-              <input
-                type="text"
+              <select
                 name="house"
                 id="house"
                 value={formData.house}
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
-                placeholder="e.g., Kirkland House"
-              />
+              >
+                {HOUSE_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label
@@ -334,15 +427,19 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
               >
                 Final Club
               </label>
-              <input
-                type="text"
+              <select
                 name="final_club"
                 id="final_club"
                 value={formData.final_club}
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
-                placeholder="e.g., Sab Club"
-              />
+              >
+                {FINAL_CLUB_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </ProfileSection>
