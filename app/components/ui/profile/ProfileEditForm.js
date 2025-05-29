@@ -28,6 +28,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
 
   useEffect(() => {
     if (profile) {
@@ -53,13 +54,107 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
     }
   }, [profile]);
 
+  function validatePhoneNumber(phone) {
+    if (!phone) return true;
+    const digitsOnly = phone.replace(/\D/g, "");
+
+    if (digitsOnly.length === 10) return true;
+    return false;
+  }
+
+  function validateLinkedInUrl(url) {
+    if (!url) return true;
+
+    const linkedinRegex =
+      /^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9\-_.%]+\/?(\?.*)?$/;
+    return linkedinRegex.test(url);
+  }
+
+  function validateInstagramUrl(url) {
+    if (!url) return true;
+
+    const instagramRegex =
+      /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?(?:\?.*)?$/;
+    return instagramRegex.test(url);
+  }
+
+  function validateField(name, value) {
+    const errors = { ...validationErrors };
+
+    switch (name) {
+      case "phone_number":
+        if (!validatePhoneNumber(value)) {
+          errors.phone_number =
+            "Please enter a valid phone number (e.g., (347) 891-6780)";
+        } else {
+          delete errors.phone_number;
+        }
+        break;
+
+      case "linkedin_url":
+        if (!validateLinkedInUrl(value)) {
+          errors.linkedin_url =
+            "Please enter a valid LinkedIn URL (e.g., https://www.linkedin.com/in/anthony-morales-2070a51bb/)";
+        } else {
+          delete errors.linkedin_url;
+        }
+        break;
+
+      case "instagram_url":
+        if (!validateInstagramUrl(value)) {
+          errors.instagram_url =
+            "Please enter a valid Instagram URL (e.g., https://www.instagram.com/anthonymorales._/?next=%2F&hl=en-gb)";
+        } else {
+          delete errors.instagram_url;
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    setValidationErrors(errors);
+  }
+
+  function formatPhoneNumber(phone) {
+    if (!phone) return "";
+
+    const digitsOnly = phone.replace(/\D/g, "");
+
+    if (digitsOnly.length === 10) {
+      return `(${digitsOnly.slice(0, 3)}) ${digitsOnly.slice(
+        3,
+        6
+      )}-${digitsOnly.slice(6)}`;
+    } else if (digitsOnly.length === 11 && digitsOnly[0] === "1") {
+      return `+1 (${digitsOnly.slice(1, 4)}) ${digitsOnly.slice(
+        4,
+        7
+      )}-${digitsOnly.slice(7)}`;
+    }
+    return phone;
+  }
+
   function handleChange(event) {
     const name = event.target.name;
-    const value = event.target.value;
+    let value = event.target.value;
+
+    if (name === "phone_number") {
+      value = formatPhoneNumber(value);
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+
+    validateField(name, value);
+  }
+
+  function handleBlur(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    validateField(name, value);
   }
 
   async function handleSubmit(event) {
@@ -67,6 +162,13 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
     setIsLoading(true);
     setError(null);
     setSuccess(false);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setError(
+        "Please make sure all fields are formatted properly before submitting"
+      );
+      setIsLoading(false);
+    }
 
     try {
       const savedData = {
@@ -94,6 +196,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
       }
 
       setSuccess(true);
+      setValidationErrors({});
 
       if (onUpdate) {
         onUpdate({
@@ -107,6 +210,18 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  function getInputClass(fieldName) {
+    const baseClass = "mt-1 block w-full rounded-md shadow-sm sm:text-sm";
+    const normalClass =
+      "border-gray-300 focus:border-[#A51C30] focus:ring-[#A51C30]";
+    const errorClass =
+      "border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500";
+
+    return `${baseClass} ${
+      validationErrors[fieldName] ? errorClass : normalClass
+    }`;
   }
 
   if (!profile) return null;
@@ -277,8 +392,38 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 id="phone_number"
                 value={formData.phone_number}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                onBlur={handleBlur}
+                className={getInputClass("phone_number")}
+                placeholder="(347) 891-6780"
               />
+              {validationErrors.phone_number && (
+                <p className="mt-1 text-sm text-red-600">
+                  {validationErrors.phone_number}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="instagram_url"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Instagram
+              </label>
+              <input
+                type="url"
+                name="instagram_url"
+                id="instagram_url"
+                value={formData.instagram_url}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={getInputClass("instagram_url")}
+                placeholder="https://www.instagram.com/anthonymorales._/?next=%2F&hl=en-gb"
+              />
+              {validationErrors.instagram_url && (
+                <p className="mt-1 text-sm text-red-600">
+                  {validationErrors.instagram_url}
+                </p>
+              )}
             </div>
             <div>
               <label
@@ -293,8 +438,15 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 id="linkedin_url"
                 value={formData.linkedin_url}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                onBlur={handleBlur}
+                className={getInputClass("linkedin_url")}
+                placeholder="https://www.linkedin.com/in/anthony-morales-2070a51bb/"
               />
+              {validationErrors.linkedin_url && (
+                <p className="mt-1 text-sm text-red-600">
+                  {validationErrors.linkedin_url}
+                </p>
+              )}
             </div>
           </div>
         </ProfileSection>
