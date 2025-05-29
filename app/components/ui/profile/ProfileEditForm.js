@@ -16,6 +16,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
     house: "",
     final_club: "",
     current_job: "",
+    current_company: "",
     current_location: "",
     board_position: "",
     bio: "",
@@ -41,6 +42,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
         house: profile.house || "",
         final_club: profile.final_club || "",
         current_job: profile.current_job || "",
+        current_company: profile.current_company || "",
         current_location: profile.current_location || "",
         board_position: profile.board_position || "",
         bio: profile.bio || "",
@@ -82,7 +84,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
       if (error) throw error;
 
       const completedFields = Object.values(savedData).filter(Boolean).length;
-      const totalNumFields = profile.role === "alumni" ? 8 : 6;
+      const totalNumFields = profile.role === "alumni" ? 9 : 6;
 
       if (completedFields === totalNumFields) {
         await supabase
@@ -316,6 +318,23 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                   onChange={handleChange}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
                   placeholder="e.g., Software Engineer"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="current_company"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Current Company
+                </label>
+                <input
+                  type="text"
+                  name="current_company"
+                  id="current_company"
+                  value={formData.current_company}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                  placeholder="e.g., Goldman Sachs"
                 />
               </div>
               <div>

@@ -11,6 +11,7 @@ export default function ProfileCompletionBar({ percentage, profile }) {
 
     if (profile.role === "alumni") {
       if (!profile.current_job) return "Add your current job";
+      if (!profile.current_company) return "Add your current company";
       if (!profile.current_location) return "Add your current location";
     }
 

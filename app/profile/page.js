@@ -40,7 +40,7 @@ export default function ProfilePage() {
     ];
 
     if (profile.role === "alumni") {
-      fields.push("current_job, current_location");
+      fields.push("current_job, current_company, current_location");
     }
 
     const completedFields = fields.filter((field) => profile[field]);
