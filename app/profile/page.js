@@ -57,6 +57,10 @@ export default function ProfilePage() {
     setIsEditing(false);
   }
 
+  function handleImageUpdate(updatedProfile) {
+    setProfile(updatedProfile);
+  }
+
   if (loading) {
     return (
       <>
@@ -98,6 +102,7 @@ export default function ProfilePage() {
             profile={profile}
             isEditing={isEditing}
             onEditClick={handleToggleEdit}
+            onProfileUpdate={handleImageUpdate}
           />
           {profile && (
             <div className="mt-6">

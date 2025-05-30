@@ -2,34 +2,34 @@
 
 import Image from "next/image";
 import RoleBadge from "./RoleBadge";
+import ProfileImageUpload from "./ProfileImageUpload";
 
-export default function ProfileHeader({ profile, isEditing, onEditClick }) {
+export default function ProfileHeader({
+  profile,
+  isEditing,
+  onEditClick,
+  onProfileUpdate,
+}) {
   if (!profile) return null;
 
-  const {
-    full_name,
-    graduation_year,
-    role,
-    position,
-    board_position,
-    profile_image_url,
-  } = profile;
-
-  const profileImage = profile_image_url || "images/profilepic.svg";
+  const { full_name, graduation_year, role, position, board_position } =
+    profile;
 
   const isBoard = board_position;
+
+  function handleImageUpdate(updatedProfile) {
+    if (onProfileUpdate) {
+      onProfileUpdate(updatedProfile);
+    }
+  }
 
   return (
     <div className="bg-white shadow rounded-lg overflow-hidden">
       <div className="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-        <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-[#A51C30]">
-          <Image
-            src={profileImage}
-            alt={full_name}
-            fill
-            className="object-cover"
-          />
-        </div>
+        <ProfileImageUpload
+          profile={profile}
+          onImageUpdate={handleImageUpdate}
+        />
         <div className="flex-1 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
