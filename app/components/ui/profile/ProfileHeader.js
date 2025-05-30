@@ -41,12 +41,12 @@ export default function ProfileHeader({
               <div className="mt-2 flex flex-wrap gap-2 justify-center sm:justify-start">
                 <RoleBadge role={role} />
                 {isBoard &&
-                  board_position.split(",").map((position, index) => (
+                  board_position.split(", ").map((position, index) => (
                     <span
                       key={index}
                       className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800"
                     >
-                      {position}
+                      {role === "alumni" ? `Ex-${position}` : position}
                     </span>
                   ))}
               </div>
