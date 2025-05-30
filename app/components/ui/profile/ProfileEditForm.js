@@ -263,7 +263,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
       if (error) throw error;
 
       const completedFields = Object.values(savedData).filter(Boolean).length;
-      const totalNumFields = profile.role === "alumni" ? 9 : 6;
+      const totalNumFields = profile.role === "alumni" ? 17 : 14;
 
       if (completedFields === totalNumFields) {
         await supabase
