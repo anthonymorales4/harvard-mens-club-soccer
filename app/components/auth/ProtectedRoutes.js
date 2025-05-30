@@ -10,16 +10,24 @@ export default function ProtectedRoute({ children }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const isProtectedRoute = pathname.startsWith("/team");
-
     if (loading) return;
+
+    const isProtectedRoute =
+      pathname.startsWith("/team") ||
+      pathname.startsWith("/alumni") ||
+      pathname.startsWith("/announcements") ||
+      pathname.startsWith("/profile");
+
+    const isAuthRoute = pathname === "/signin" || pathname === "/signup";
 
     if (!user && isProtectedRoute) {
       router.push("/signin");
+      return;
     }
 
-    if (user && (pathname === "/signin" || pathname === "/signup")) {
+    if (user && isAuthRoute) {
       router.push("/team");
+      return;
     }
   }, [user, loading, pathname, router]);
 
