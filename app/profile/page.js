@@ -36,11 +36,15 @@ export default function ProfilePage() {
       "house",
       "concentration",
       "hometown",
+      "final_club",
+      "linkedin_url",
+      "instagram_url",
+      "board_position",
       "phone_number",
     ];
 
     if (profile.role === "alumni") {
-      fields.push("current_job, current_company, current_location");
+      fields.push("current_job", "current_company", "current_location");
     }
 
     const completedFields = fields.filter((field) => profile[field]);
