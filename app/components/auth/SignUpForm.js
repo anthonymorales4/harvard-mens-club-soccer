@@ -101,7 +101,7 @@ export default function SignUpForm() {
             required
             value={formData.full_name}
             onChange={handleChange}
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-[#A51C30]"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-[#A51C30] text-gray-900"
           />
         </div>
       </div>
@@ -121,7 +121,7 @@ export default function SignUpForm() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-[#A51C30]"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-[#A51C30] text-gray-900"
           />
         </div>
       </div>
@@ -141,7 +141,7 @@ export default function SignUpForm() {
             required
             value={formData.password}
             onChange={handleChange}
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-[#A51C30]"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-[#A51C30] text-gray-900"
           />
         </div>
       </div>
@@ -161,7 +161,7 @@ export default function SignUpForm() {
             max="2100"
             value={formData.graduation_year}
             onChange={handleChange}
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-[#A51C30]"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:border-[#A51C30] text-gray-900"
           />
         </div>
       </div>

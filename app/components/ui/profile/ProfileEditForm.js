@@ -312,7 +312,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
               rows={4}
               value={formData.bio}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30]"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] text-gray-900"
               placeholder="Tell us about yourself..."
             />
           </div>
@@ -333,7 +333,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 id="position"
                 value={formData.position}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900 bg-white"
               >
                 {POSITION_OPTIONS.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -377,7 +377,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 id="house"
                 value={formData.house}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900 bg-white"
               >
                 {HOUSE_OPTIONS.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -399,7 +399,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 id="concentration"
                 value={formData.concentration}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900"
                 placeholder="e.g., Computer Science"
               />
             </div>
@@ -416,7 +416,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 id="hometown"
                 value={formData.hometown}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900"
                 placeholder="e.g., Bay Shore, NY"
               />
             </div>
@@ -432,7 +432,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 id="final_club"
                 value={formData.final_club}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900 bg-white"
               >
                 {FINAL_CLUB_OPTIONS.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -458,7 +458,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 id="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900"
               />
             </div>
             <div>
@@ -475,7 +475,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 value={formData.phone_number}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900"
                 placeholder="e.g., (347) 891-6780"
               />
               {validationErrors.phone_number && (
@@ -498,7 +498,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 value={formData.instagram_url}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900"
                 placeholder="e.g., https://www.instagram.com/anthonymorales._"
               />
               {validationErrors.instagram_url && (
@@ -521,7 +521,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                 value={formData.linkedin_url}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900"
                 placeholder="https://www.linkedin.com/in/anthony-morales/"
               />
               {validationErrors.linkedin_url && (
@@ -550,7 +550,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                   id="current_job"
                   value={formData.current_job}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900"
                   placeholder="e.g., Software Engineer"
                 />
               </div>
@@ -567,7 +567,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                   id="current_company"
                   value={formData.current_company}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900"
                   placeholder="e.g., Goldman Sachs"
                 />
               </div>
@@ -584,7 +584,7 @@ export default function ProfileEditForm({ profile, onCancel, onUpdate }) {
                   id="current_location"
                   value={formData.current_location}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#A51C30] focus:ring-[#A51C30] sm:text-sm text-gray-900"
                   placeholder="e.g., New York, NY"
                 />
               </div>
