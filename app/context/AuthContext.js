@@ -9,42 +9,52 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    async function getInitialSession() {
-      setLoading(true);
-      setError(null);
+    let mounted = true;
 
+    async function getInitialSession() {
       try {
         const {
           data: { session },
+          error: sessionError,
         } = await supabase.auth.getSession();
 
-        if (session) {
-          setUser(session.user);
-          const { data, error } = await supabase
-            .from("profiles")
-            .select("*")
-            .eq("id", session.user.id)
-            .single();
+        if (sessionError) throw sessionError;
 
-          if (error) throw error;
+        if (mounted) {
+          if (session?.user) {
+            const { data: profileData, error: profileError } = await supabase
+              .from("profiles")
+              .select("*")
+              .eq("id", session.user.id)
+              .single();
 
-          if (data) {
-            setUser((currentUser) => ({
-              ...currentUser,
-              profile: data,
-            }));
+            if (profileError) {
+              console.error("Error fetching profile: ", profileError);
+            }
+
+            setUser({
+              ...session.user,
+              profile: profileData,
+            });
+          } else {
+            setUser(null);
           }
-        } else {
-          setUser(null);
+          setError(null);
         }
       } catch (error) {
         console.error("Error getting initial session: ", error);
-        setError(error.message);
-        setUser(null);
+        if (mounted) {
+          setError(error.message);
+          setUser(null);
+        }
       } finally {
-        setLoading(false);
+        if (mounted) {
+          setLoading(false);
+          setInitialized(true);
+        }
       }
     }
 
@@ -52,27 +62,65 @@ export function AuthProvider({ children }) {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((session) => {
-      if (session) {
-        setUser(session.user);
-      } else {
-        setUser(null);
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("Auth state change:", event, session);
+
+      if (!mounted) return;
+
+      try {
+        if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+          if (session?.user) {
+            const { data: profileData, error: profileError } = await supabase
+              .from("profiles")
+              .select("*")
+              .eq("id", session.user.id)
+              .single();
+
+            if (profileError) {
+              console.error("Error fetching profile", profileError);
+            }
+
+            setUser({
+              ...session.user,
+              profile: profileData,
+            });
+          }
+        } else if (event === "SIGNED_OUT") {
+          setUser(null);
+        }
+        setError(null);
+      } catch (error) {
+        console.error("Error in auth state change: ", error);
+        setError(error.message);
+      } finally {
+        if (!initialized) {
+          setLoading(false);
+          setInitialized(true);
+        }
       }
-      setLoading(false);
     });
 
     return () => {
+      mounted = false;
       subscription.unsubscribe();
     };
-  }, []);
+  }, [initialized]);
 
   async function signOut() {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      setUser(null);
+    } catch (error) {
+      console.error("Error signing out: ", error);
+      setError(error.message);
+    }
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, error, signOut }}>
+    <AuthContext.Provider
+      value={{ user, loading, error, signOut, initialized }}
+    >
       {children}
     </AuthContext.Provider>
   );
