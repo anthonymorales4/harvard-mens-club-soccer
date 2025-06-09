@@ -147,7 +147,7 @@ export default function TeamPage() {
               </div>
             </div>
 
-            {/* Season Selector */}
+            {/* Season */}
             <div className="inline-block">
               <select
                 value={selectedSeason}
@@ -171,185 +171,173 @@ export default function TeamPage() {
           </div>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Roster */}
-          <div className="lg:col-span-2">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Roster</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {placeholderRoster.map((player) => (
-                <div key={player.id} className="bg-white rounded-lg shadow p-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
-                      <Image
-                        src={player.profileImage}
-                        alt={player.name}
-                        width={48}
-                        height={48}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900">
-                        {player.name}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        Class of {player.graduationYear}
-                      </p>
-                      <p className="text-sm text-[#A51C30]">
-                        {player.position}
-                      </p>
-                    </div>
+        <div className="space-y-12">
+          {/* Roster */}
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Roster</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {placeholderRoster.map((player) => (
+              <div key={player.id} className="bg-white rounded-lg shadow p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+                    <Image
+                      src={player.profileImage}
+                      alt={player.name}
+                      width={48}
+                      height={48}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-gray-900">{player.name}</h3>
+                    <p className="text-sm text-gray-600">
+                      Class of {player.graduationYear}
+                    </p>
+                    <p className="text-sm text-[#A51C30]">{player.position}</p>
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
+          </div>
+
+          {/* Standings */}
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Standings
+            </h2>
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Team
+                      </th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        W
+                      </th>
+                      <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        L
+                      </th>
+                      <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        T
+                      </th>
+                      <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        GF
+                      </th>
+                      <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        GA
+                      </th>
+                      <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        GD
+                      </th>
+                      <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Pts
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {standingsData.map((team, index) => (
+                      <tr
+                        key={index}
+                        className={
+                          team.team.includes("Harvard") ? "bg-[#A51C30]/5" : ""
+                        }
+                      >
+                        <td className="px-4 py-3 text-sm text-gray-900 font-medium">
+                          {team.team}
+                        </td>
+                        <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                          {team.wins}
+                        </td>
+                        <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                          {team.losses}
+                        </td>
+                        <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                          {team.ties}
+                        </td>
+                        <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                          {team.goalsFor}
+                        </td>
+                        <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                          {team.goalsAgainst}
+                        </td>
+                        <td className="px-2 py-2 text-sm text-gray-500 text-center">
+                          {team.goalDifference}
+                        </td>
+                        <td className="px-2 py-2 text-xs text-gray-500 text-center font-semibold">
+                          {team.points}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
-          {/* Right Column - Standings and Schedule */}
-          <div className="space-y-8">
-            {/* Standings */}
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Standings
-              </h2>
-              <div className="bg-white rounded-lg shadow overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="min-w-full">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Team
-                        </th>
-                        <th className="px-2 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          W
-                        </th>
-                        <th className="px-2 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          L
-                        </th>
-                        <th className="px-2 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          T
-                        </th>
-                        <th className="px-2 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          GF
-                        </th>
-                        <th className="px-2 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          GA
-                        </th>
-                        <th className="px-2 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          GD
-                        </th>
-                        <th className="px-2 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Pts
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {standingsData.map((team, index) => (
-                        <tr
-                          key={index}
-                          className={
-                            team.team.includes("Harvard")
-                              ? "bg-[#A51C30]/5"
-                              : ""
-                          }
-                        >
-                          <td className="px-3 py-2 text-xs text-gray-900 font-medium">
-                            {team.team}
-                          </td>
-                          <td className="px-2 py-2 text-xs text-gray-500 text-center">
-                            {team.wins}
-                          </td>
-                          <td className="px-2 py-2 text-xs text-gray-500 text-center">
-                            {team.losses}
-                          </td>
-                          <td className="px-2 py-2 text-xs text-gray-500 text-center">
-                            {team.ties}
-                          </td>
-                          <td className="px-2 py-2 text-xs text-gray-500 text-center">
-                            {team.goalsFor}
-                          </td>
-                          <td className="px-2 py-2 text-xs text-gray-500 text-center">
-                            {team.goalsAgainst}
-                          </td>
-                          <td className="px-2 py-2 text-xs text-gray-500 text-center">
-                            {team.goalDifference}
-                          </td>
-                          <td className="px-2 py-2 text-xs text-gray-500 text-center font-semibold">
-                            {team.points}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+          {/* Schedule */}
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Schedule
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Previous Game */}
+              <div className="bg-white rounded-lg shadow p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm font-medium text-gray-500 uppercase">
+                    Last Game
+                  </span>
+                  <span
+                    className={`text-xs font-bold px-3 py-1 rounded-full ${
+                      scheduleData.previousGame.result === "W"
+                        ? "bg-green-100 text-green-800"
+                        : scheduleData.previousGame.result === "L"
+                        ? "bg-red-100 text-red-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}
+                  >
+                    {scheduleData.previousGame.result === "W"
+                      ? "WIN"
+                      : scheduleData.previousGame.result === "L"
+                      ? "LOSS"
+                      : "TIE"}
+                  </span>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-medium text-gray-900 mb-2">
+                    {scheduleData.previousGame.homeTeam} vs{" "}
+                    {scheduleData.previousGame.awayTeam}
+                  </div>
+                  <div className="text-2xl font-bold text-[#A51C30] mb-2">
+                    {scheduleData.previousGame.homeScore} -{" "}
+                    {scheduleData.previousGame.awayScore}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {scheduleData.previousGame.date}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Schedule */}
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Schedule
-              </h2>
-              <div className="space-y-4">
-                {/* Previous Game */}
-                <div className="bg-white rounded-lg shadow p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-medium text-gray-500 uppercase">
-                      Last Game
-                    </span>
-                    <span
-                      className={`text-xs font-bold px-2 py-1 rounded ${
-                        scheduleData.previousGame.result === "W"
-                          ? "bg-green-100 text-green-800"
-                          : scheduleData.previousGame.result === "L"
-                          ? "bg-red-100 text-red-800"
-                          : "bg-yellow-100 text-yellow-800"
-                      }`}
-                    >
-                      {scheduleData.previousGame.result === "W"
-                        ? "WIN"
-                        : scheduleData.previousGame.result === "L"
-                        ? "LOSS"
-                        : "TIE"}
-                    </span>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-sm font-medium text-gray-900 mb-1">
-                      {scheduleData.previousGame.homeTeam} vs{" "}
-                      {scheduleData.previousGame.awayTeam}
-                    </div>
-                    <div className="text-lg font-bold text-[#A51C30] mb-1">
-                      {scheduleData.previousGame.homeScore} -{" "}
-                      {scheduleData.previousGame.awayScore}
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {scheduleData.previousGame.date}
-                    </div>
-                  </div>
+              {/* Next Game */}
+              <div className="bg-white rounded-lg shadow p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm font-medium text-gray-500 uppercase">
+                    Next Game
+                  </span>
+                  <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800">
+                    UPCOMING
+                  </span>
                 </div>
-
-                {/* Next Game */}
-                <div className="bg-white rounded-lg shadow p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-medium text-gray-500 uppercase">
-                      Next Game
-                    </span>
-                    <span className="text-xs font-bold px-2 py-1 rounded bg-blue-100 text-blue-800">
-                      UPCOMING
-                    </span>
+                <div className="text-center">
+                  <div className="text-lg font-medium text-gray-900 mb-2">
+                    {scheduleData.nextGame.homeTeam} vs{" "}
+                    {scheduleData.nextGame.awayTeam}
                   </div>
-                  <div className="text-center">
-                    <div className="text-sm font-medium text-gray-900 mb-1">
-                      {scheduleData.nextGame.homeTeam} vs{" "}
-                      {scheduleData.nextGame.awayTeam}
-                    </div>
-                    <div className="text-lg font-bold text-[#A51C30] mb-1">
-                      {scheduleData.nextGame.time}
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {scheduleData.nextGame.date}
-                    </div>
+                  <div className="text-2xl font-bold text-[#A51C30] mb-2">
+                    {scheduleData.nextGame.time}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {scheduleData.nextGame.date}
                   </div>
                 </div>
               </div>
