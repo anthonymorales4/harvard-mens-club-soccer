@@ -1,168 +1,76 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Navbar from "../components/layout/Navbar";
+import {
+  calculateRecentForm,
+  calculateTeamRecord,
+  loadRoster,
+  loadSchedule,
+  loadSeasons,
+  loadStandings,
+} from "@/lib/dataUtils";
 
 export default function TeamPage() {
   const [selectedSeason, setSelectedSeason] = useState("2024");
+  const [seasons, setSeasons] = useState([]);
+  const [roster, setRoster] = useState([]);
+  const [standings, setStandings] = useState([]);
+  const [schedule, setSchedule] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const seasons = [
-    { value: "2024", label: "Fall 2024" },
-    { value: "2023", label: "Fall 2023" },
-    { value: "2022", label: "Fall 2022" },
-  ];
+  useEffect(() => {
+    async function loadInitialData() {
+      try {
+        setLoading(true);
+        const seasonsData = await loadSeasons();
+        setSeasons(seasonsData.seasons);
 
-  const teamRecord = { wins: 5, losses: 4, ties: 1 };
+        const currentSeason = seasonsData.seasons.find(
+          (season) => season.isActive
+        )?.year;
+        setSelectedSeason(currentSeason);
+      } catch (error) {
+        setError("Failed to load initial data");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  const recentForm = ["W", "L", "W", "L", "D"];
+    loadInitialData();
+  }, []);
 
-  const placeholderRoster = [
-    {
-      id: 1,
-      name: "Anthony Morales",
-      graduationYear: 2024,
-      position: "Midfielder",
-      profileImage: "/images/profilepic.svg",
-    },
-    {
-      id: 2,
-      name: "James Mitchell",
-      graduationYear: 2026,
-      position: "Forward",
-      profileImage: "/images/profilepic.svg",
-    },
-    {
-      id: 3,
-      name: "David Rodriguez",
-      graduationYear: 2025,
-      position: "Defender",
-      profileImage: "/images/profilepic.svg",
-    },
-    {
-      id: 4,
-      name: "Michael Chen",
-      graduationYear: 2024,
-      position: "Goalkeeper",
-      profileImage: "/images/profilepic.svg",
-    },
-  ];
+  useEffect(() => {
+    async function loadSeasonData() {
+      if (!selectedSeason) return;
 
-  const standingsData = [
-    {
-      team: "Harvard University - Crimson",
-      wins: 5,
-      losses: 4,
-      ties: 1,
-      goalsFor: 16,
-      goalsAgainst: 17,
-      goalDifference: -1,
-      points: 16,
-    },
-    {
-      team: "MIT Engineers",
-      wins: 7,
-      losses: 2,
-      ties: 1,
-      goalsFor: 22,
-      goalsAgainst: 12,
-      goalDifference: 10,
-      points: 22,
-    },
-    {
-      team: "Tufts Jumbos",
-      wins: 6,
-      losses: 3,
-      ties: 1,
-      goalsFor: 18,
-      goalsAgainst: 15,
-      goalDifference: 3,
-      points: 19,
-    },
-  ];
+      try {
+        setLoading(true);
+        const [standingsData, scheduleData, rosterData] = await Promise.all([
+          loadStandings(selectedSeason),
+          loadSchedule(selectedSeason),
+          loadRoster(selectedSeason),
+        ]);
 
-  const scheduleData = [
-    {
-      homeTeam: "Harvard University - Crimson",
-      awayTeam: "Brown University Bears",
-      date: "2024-12-05",
-      time: "3:00 PM",
-      score: null,
-      result: null,
-    },
-    {
-      homeTeam: "Tufts University Jumbos",
-      awayTeam: "Harvard University - Crimson",
-      date: "2024-11-28",
-      time: "2:00 PM",
-      score: { home: 1, away: 3 },
-      result: "WIN",
-    },
-    {
-      homeTeam: "Harvard University - Crimson",
-      awayTeam: "Brown University Bears",
-      date: "2024-11-15",
-      time: "3:30 PM",
-      score: { home: 2, away: 1 },
-      result: "WIN",
-    },
-    {
-      homeTeam: "MIT Engineers",
-      awayTeam: "Harvard University - Crimson",
-      date: "2024-11-08",
-      time: "1:00 PM",
-      score: { home: 2, away: 2 },
-      result: "TIE",
-    },
-    {
-      homeTeam: "Harvard University - Crimson",
-      awayTeam: "Yale University Bulldogs",
-      date: "2024-11-01",
-      time: "4:00 PM",
-      score: { home: 1, away: 4 },
-      result: "LOSS",
-    },
-    {
-      homeTeam: "Boston University Terriers",
-      awayTeam: "Harvard University - Crimson",
-      date: "2024-10-25",
-      time: "7:00 PM",
-      score: { home: 0, away: 3 },
-      result: "WIN",
-    },
-    {
-      homeTeam: "Harvard University - Crimson",
-      awayTeam: "Northeastern Huskies",
-      date: "2024-10-18",
-      time: "2:30 PM",
-      score: { home: 2, away: 0 },
-      result: "WIN",
-    },
-    {
-      homeTeam: "Columbia University Lions",
-      awayTeam: "Harvard University - Crimson",
-      date: "2024-10-11",
-      time: "6:00 PM",
-      score: { home: 1, away: 2 },
-      result: "WIN",
-    },
-    {
-      homeTeam: "Harvard University - Crimson",
-      awayTeam: "Dartmouth College Big Green",
-      date: "2024-10-04",
-      time: "3:00 PM",
-      score: { home: 0, away: 1 },
-      result: "LOSS",
-    },
-    {
-      homeTeam: "Princeton University Tigers",
-      awayTeam: "Harvard University - Crimson",
-      date: "2024-09-27",
-      time: "1:30 PM",
-      score: { home: 2, away: 1 },
-      result: "LOSS",
-    },
-  ];
+        setStandings(standingsData.teams);
+        setSchedule(scheduleData.games);
+        setRoster(rosterData);
+      } catch (error) {
+        setError(`Failed to load data for ${selectedSeason}`);
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadSeasonData();
+  }, [selectedSeason]);
+
+  const teamRecord = calculateTeamRecord(schedule);
+  const recentForm = calculateRecentForm(schedule);
 
   function getFormColor(result) {
     switch (result) {
@@ -175,6 +83,33 @@ export default function TeamPage() {
       default:
         return "bg-gray-500";
     }
+  }
+
+  if (loading && !seasons.length) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#A51C30] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading team data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-[#A51C30] text-white px-4 py-2 rounded-md hover:bg-[#8A1726]"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -194,23 +129,25 @@ export default function TeamPage() {
             </p>
 
             {/* Recent Form */}
-            <div className="flex items-center mb-4">
-              <span className="text-sm font-medium text-gray-700 mr-3">
-                Recent Form:
-              </span>
-              <div className="flex space-x-1">
-                {recentForm.map((result, index) => (
-                  <div
-                    key={index}
-                    className={`w-6 h-6 rounded-full ${getFormColor(
-                      result
-                    )} flex items-center justify-center text-white text-xs font-bold`}
-                  >
-                    {result}
-                  </div>
-                ))}
+            {recentForm.length > 0 && (
+              <div className="flex items-center mb-4">
+                <span className="text-sm font-medium text-gray-700 mr-3">
+                  Recent Form:
+                </span>
+                <div className="flex space-x-1">
+                  {recentForm.map((result, index) => (
+                    <div
+                      key={index}
+                      className={`w-6 h-6 rounded-full ${getFormColor(
+                        result
+                      )} flex items-center justify-center text-white text-xs font-bold`}
+                    >
+                      {result}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Season */}
             <div className="inline-block">
@@ -218,9 +155,10 @@ export default function TeamPage() {
                 value={selectedSeason}
                 onChange={(e) => setSelectedSeason(e.target.value)}
                 className="bg-[#A51C30] text-white px-4 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2"
+                disabled={loading}
               >
                 {seasons.map((season) => (
-                  <option key={season.value} value={season.value}>
+                  <option key={season.year} value={season.year}>
                     {season.label}
                   </option>
                 ))}
@@ -236,9 +174,21 @@ export default function TeamPage() {
           </div>
         </div>
 
+        {/* Loading Overlay for Season Changes */}
+        {loading && seasons.length > 0 && (
+          <div className="fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-10">
+            <div className="bg-white rounded-lg p-6 shadow-lg">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#A51C30] mx-auto mb-2"></div>
+              <p className="text-sm text-gray-600">
+                Loading {selectedSeason} data...
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="space-y-12">
           {/* Roster */}
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Roster</h2>
+          {/* <h2 className="text-xl font-semibold text-gray-900 mb-4">Roster</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {placeholderRoster.map((player) => (
               <div key={player.id} className="bg-white rounded-lg shadow p-4">
@@ -262,7 +212,7 @@ export default function TeamPage() {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
 
           {/* Standings */}
           <div>
@@ -301,7 +251,7 @@ export default function TeamPage() {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {standingsData.map((team, index) => (
+                    {standings.map((team, index) => (
                       <tr
                         key={index}
                         className={
@@ -347,9 +297,8 @@ export default function TeamPage() {
             </h2>
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <div className="divide-y divide-gray-200">
-                {scheduleData.map((game, index) => {
+                {schedule.map((game, index) => {
                   const isHomeGame = game.homeTeam.includes("Harvard");
-                  const isCompleted = game.score !== null;
 
                   const matchupDisplay = isHomeGame
                     ? `${game.homeTeam} vs. ${game.awayTeam}`
@@ -398,13 +347,11 @@ export default function TeamPage() {
 
                             {/* Score or Status */}
                             <div className="text-center min-w-[80px]">
-                              {isCompleted ? (
-                                <div className="text-lg font-bold text-[#A51C30]">
-                                  {isHomeGame
-                                    ? `${game.score.home} - ${game.score.away}`
-                                    : `${game.score.away} - ${game.score.home}`}
-                                </div>
-                              ) : null}
+                              <div className="text-lg font-bold text-[#A51C30]">
+                                {isHomeGame
+                                  ? `${game.score.home} - ${game.score.away}`
+                                  : `${game.score.away} - ${game.score.home}`}
+                              </div>
                             </div>
 
                             {/* Result Badge */}
