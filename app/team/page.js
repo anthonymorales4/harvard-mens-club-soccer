@@ -7,7 +7,6 @@ import Navbar from "../components/layout/Navbar";
 export default function TeamPage() {
   const [selectedSeason, setSelectedSeason] = useState("2024");
 
-  // Placeholder data for Phase 1
   const seasons = [
     { value: "2024", label: "Fall 2024" },
     { value: "2023", label: "Fall 2023" },
@@ -16,7 +15,7 @@ export default function TeamPage() {
 
   const teamRecord = { wins: 5, losses: 4, ties: 1 };
 
-  const recentForm = ["W", "L", "W", "L", "D"]; // Last 5 games
+  const recentForm = ["W", "L", "W", "L", "D"];
 
   const placeholderRoster = [
     {
@@ -82,22 +81,88 @@ export default function TeamPage() {
     },
   ];
 
-  const scheduleData = {
-    previousGame: {
-      homeTeam: "Harvard University",
-      awayTeam: "Brown University",
-      homeScore: 2,
-      awayScore: 1,
-      date: "Nov 15, 2024",
-      result: "W",
-    },
-    nextGame: {
-      homeTeam: "Harvard University",
-      awayTeam: "Tufts University",
-      date: "Dec 5, 2024",
+  const scheduleData = [
+    {
+      homeTeam: "Harvard University - Crimson",
+      awayTeam: "Brown University Bears",
+      date: "2024-12-05",
       time: "3:00 PM",
+      score: null,
+      result: null,
     },
-  };
+    {
+      homeTeam: "Tufts University Jumbos",
+      awayTeam: "Harvard University - Crimson",
+      date: "2024-11-28",
+      time: "2:00 PM",
+      score: { home: 1, away: 3 },
+      result: "WIN",
+    },
+    {
+      homeTeam: "Harvard University - Crimson",
+      awayTeam: "Brown University Bears",
+      date: "2024-11-15",
+      time: "3:30 PM",
+      score: { home: 2, away: 1 },
+      result: "WIN",
+    },
+    {
+      homeTeam: "MIT Engineers",
+      awayTeam: "Harvard University - Crimson",
+      date: "2024-11-08",
+      time: "1:00 PM",
+      score: { home: 2, away: 2 },
+      result: "TIE",
+    },
+    {
+      homeTeam: "Harvard University - Crimson",
+      awayTeam: "Yale University Bulldogs",
+      date: "2024-11-01",
+      time: "4:00 PM",
+      score: { home: 1, away: 4 },
+      result: "LOSS",
+    },
+    {
+      homeTeam: "Boston University Terriers",
+      awayTeam: "Harvard University - Crimson",
+      date: "2024-10-25",
+      time: "7:00 PM",
+      score: { home: 0, away: 3 },
+      result: "WIN",
+    },
+    {
+      homeTeam: "Harvard University - Crimson",
+      awayTeam: "Northeastern Huskies",
+      date: "2024-10-18",
+      time: "2:30 PM",
+      score: { home: 2, away: 0 },
+      result: "WIN",
+    },
+    {
+      homeTeam: "Columbia University Lions",
+      awayTeam: "Harvard University - Crimson",
+      date: "2024-10-11",
+      time: "6:00 PM",
+      score: { home: 1, away: 2 },
+      result: "WIN",
+    },
+    {
+      homeTeam: "Harvard University - Crimson",
+      awayTeam: "Dartmouth College Big Green",
+      date: "2024-10-04",
+      time: "3:00 PM",
+      score: { home: 0, away: 1 },
+      result: "LOSS",
+    },
+    {
+      homeTeam: "Princeton University Tigers",
+      awayTeam: "Harvard University - Crimson",
+      date: "2024-09-27",
+      time: "1:30 PM",
+      score: { home: 2, away: 1 },
+      result: "LOSS",
+    },
+  ];
 
   function getFormColor(result) {
     switch (result) {
@@ -212,7 +277,7 @@ export default function TeamPage() {
                       <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Team
                       </th>
-                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                         W
                       </th>
                       <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -261,10 +326,10 @@ export default function TeamPage() {
                         <td className="px-3 py-3 text-sm text-gray-500 text-center">
                           {team.goalsAgainst}
                         </td>
-                        <td className="px-2 py-2 text-sm text-gray-500 text-center">
+                        <td className="px-3 py-3 text-sm text-gray-500 text-center">
                           {team.goalDifference}
                         </td>
-                        <td className="px-2 py-2 text-xs text-gray-500 text-center font-semibold">
+                        <td className="px-3 py-3 text-sm text-gray-500 text-center font-semibold">
                           {team.points}
                         </td>
                       </tr>
@@ -275,71 +340,89 @@ export default function TeamPage() {
             </div>
           </div>
 
-          {/* Schedule */}
+          {/* Schedule Section */}
           <div>
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Schedule
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Previous Game */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm font-medium text-gray-500 uppercase">
-                    Last Game
-                  </span>
-                  <span
-                    className={`text-xs font-bold px-3 py-1 rounded-full ${
-                      scheduleData.previousGame.result === "W"
-                        ? "bg-green-100 text-green-800"
-                        : scheduleData.previousGame.result === "L"
-                        ? "bg-red-100 text-red-800"
-                        : "bg-yellow-100 text-yellow-800"
-                    }`}
-                  >
-                    {scheduleData.previousGame.result === "W"
-                      ? "WIN"
-                      : scheduleData.previousGame.result === "L"
-                      ? "LOSS"
-                      : "TIE"}
-                  </span>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-medium text-gray-900 mb-2">
-                    {scheduleData.previousGame.homeTeam} vs{" "}
-                    {scheduleData.previousGame.awayTeam}
-                  </div>
-                  <div className="text-2xl font-bold text-[#A51C30] mb-2">
-                    {scheduleData.previousGame.homeScore} -{" "}
-                    {scheduleData.previousGame.awayScore}
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    {scheduleData.previousGame.date}
-                  </div>
-                </div>
-              </div>
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="divide-y divide-gray-200">
+                {scheduleData.map((game, index) => {
+                  const isHomeGame = game.homeTeam.includes("Harvard");
+                  const isCompleted = game.score !== null;
 
-              {/* Next Game */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm font-medium text-gray-500 uppercase">
-                    Next Game
-                  </span>
-                  <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800">
-                    UPCOMING
-                  </span>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-medium text-gray-900 mb-2">
-                    {scheduleData.nextGame.homeTeam} vs{" "}
-                    {scheduleData.nextGame.awayTeam}
-                  </div>
-                  <div className="text-2xl font-bold text-[#A51C30] mb-2">
-                    {scheduleData.nextGame.time}
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    {scheduleData.nextGame.date}
-                  </div>
-                </div>
+                  const matchupDisplay = isHomeGame
+                    ? `${game.homeTeam} vs. ${game.awayTeam}`
+                    : `${game.awayTeam} @ ${game.homeTeam}`;
+
+                  const gameDate = new Date(game.date).toLocaleDateString(
+                    "en-US",
+                    {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    }
+                  );
+
+                  const getResultStyle = (result) => {
+                    if (!result) return "bg-blue-100 text-blue-800";
+                    switch (result) {
+                      case "WIN":
+                        return "bg-green-100 text-green-800";
+                      case "LOSS":
+                        return "bg-red-100 text-red-800";
+                      case "TIE":
+                        return "bg-yellow-100 text-yellow-800";
+                      default:
+                        return "bg-gray-100 text-gray-800";
+                    }
+                  };
+
+                  return (
+                    <div
+                      key={index}
+                      className="p-4 hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-4">
+                            {/* Game Info */}
+                            <div className="flex-1">
+                              <div className="text-sm font-medium text-gray-900 mb-1">
+                                {matchupDisplay}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {gameDate} • {game.time}
+                              </div>
+                            </div>
+
+                            {/* Score or Status */}
+                            <div className="text-center min-w-[80px]">
+                              {isCompleted ? (
+                                <div className="text-lg font-bold text-[#A51C30]">
+                                  {isHomeGame
+                                    ? `${game.score.home} - ${game.score.away}`
+                                    : `${game.score.away} - ${game.score.home}`}
+                                </div>
+                              ) : null}
+                            </div>
+
+                            {/* Result Badge */}
+                            <div className="min-w-[80px] text-right">
+                              <span
+                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getResultStyle(
+                                  game.result
+                                )}`}
+                              >
+                                {game.result || "UPCOMING"}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
