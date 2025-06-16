@@ -1,13 +1,12 @@
 {
   "season": "2024",
-  "lastUpdated": "2024-10-13",
   "games": [
     {
       "id": 1,
-      "homeTeam": "Harvard University - Crimson",
-      "awayTeam": "Tufts University - Blue",
+      "homeTeam": "Tufts University - Blue",
+      "awayTeam": "Harvard University - Crimson",
       "date": "2024-10-12",
-      "time": "TBD",
+      "time": "5:00 PM",
       "score": { "home": 1, "away": 0 },
       "result": "LOSS"
     },
@@ -16,70 +15,79 @@
       "homeTeam": "Harvard University - Crimson",
       "awayTeam": "Boston University",
       "date": "2024-10-07",
-      "time": "TBD",
+      "time": "9:00 PM",
       "score": { "home": 1, "away": 5 },
       "result": "LOSS"
     },
     {
       "id": 3,
-      "homeTeam": "Harvard University - Crimson",
-      "awayTeam": "Harvard University - White",
-      "date": "2024-10-03",
-      "time": "TBD",
-      "score": { "home": 1, "away": 0 },
-      "result": "WIN"
+      "homeTeam": "Worcester Polytechnic",
+      "awayTeam": "Harvard University - Crimson",
+      "date": "2024-10-05",
+      "time": "6:30 PM",
+      "score": { "home": 0, "away": 0 },
+      "result": "TIE"
     },
     {
       "id": 4,
       "homeTeam": "Harvard University - Crimson",
-      "awayTeam": "Brandeis University",
-      "date": "2024-09-29",
-      "time": "TBD",
-      "score": { "home": 2, "away": 1 },
+      "awayTeam": "Harvard University - White",
+      "date": "2024-10-03",
+      "time": "9:00 PM",
+      "score": { "home": 1, "away": 0 },
       "result": "WIN"
     },
     {
       "id": 5,
       "homeTeam": "Harvard University - Crimson",
+      "awayTeam": "Brandeis University",
+      "date": "2024-09-29",
+      "time": "4:00 PM",
+      "score": { "home": 2, "away": 1 },
+      "result": "WIN"
+    },
+    {
+      "id": 6,
+      "homeTeam": "Harvard University - Crimson",
       "awayTeam": "Tufts University - Brown",
       "date": "2024-09-28",
-      "time": "TBD",
+      "time": "2:00 PM",
       "score": { "home": 2, "away": 4 },
       "result": "LOSS"
     },
     {
-      "id": 6,
+      "id": 7,
       "homeTeam": "College of the Holy Cross",
       "awayTeam": "Harvard University - Crimson",
       "date": "2024-09-22",
-      "time": "TBD",
-      "score": { "home": 3, "away": 2 },
-      "result": "LOSS"
-    },
-    {
-      "id": 7,
-      "homeTeam": "Springfield College",
-      "awayTeam": "Harvard University - Crimson",
-      "date": "2024-09-21",
-      "time": "TBD",
-      "score": { "home": 5, "away": 0 },
-      "result": "LOSS"
+      "time": "2:00 PM",
+      "score": { "home": 2, "away": 3 },
+      "result": "WIN"
     },
     {
       "id": 8,
-      "homeTeam": "Clark University",
+      "homeTeam": "Springfield College",
       "awayTeam": "Harvard University - Crimson",
-      "date": "2024-09-14",
-      "time": "TBD",
-      "score": { "home": 2, "away": 0 },
-      "result": "LOSS"
+      "date": "2024-09-21",
+      "time": "3:00 PM",
+      "score": { "home": 0, "away": 5 },
+      "result": "WIN"
     },
     {
       "id": 9,
+      "homeTeam": "Clark University",
+      "awayTeam": "Harvard University - Crimson",
+      "date": "2024-09-14",
+      "time": "1:00 PM",
+      "score": { "home": 0, "away": 2 },
+      "result": "WIN"
+    },
+    {
+      "id": 10,
       "homeTeam": "Harvard University - Crimson",
       "awayTeam": "Boston College",
       "date": "2024-09-13",
-      "time": "TBD",
+      "time": "8:00 PM",
       "score": { "home": 0, "away": 4 },
       "result": "LOSS"
     }

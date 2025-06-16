@@ -1,0 +1,53 @@
+{
+  "competitions": [
+    {
+      "id": "nirsa",
+      "label": "NIRSA Region 1",
+      "season": "Fall",
+      "isActive": true
+    },
+    {
+      "id": "ivies", 
+      "label": "Ivy League Championships",
+      "season": "Spring",
+      "isActive": false
+    }
+  ],
+  "years": [
+    {
+      "year": "2024",
+      "label": "2024",
+      "isActive": true
+    },
+    {
+      "year": "2023",
+      "label": "2023", 
+      "isActive": false
+    },
+    {
+      "year": "2022",
+      "label": "2022",
+      "isActive": false
+    },
+    {
+      "year": "2021",
+      "label": "2021",
+      "isActive": false
+    },
+    {
+      "year": "2019",
+      "label": "2019",
+      "isActive": false
+    },
+    {
+      "year": "2018", 
+      "label": "2018",
+      "isActive": false
+    },
+    {
+      "year": "2017",
+      "label": "2017",
+      "isActive": false
+    }
+  ]
+}
