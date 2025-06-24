@@ -3,14 +3,16 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/layout/Navbar";
 import {
+  loadSeasons,
+  loadRoster,
+  loadSchedule,
+  loadStandings,
   calculateRecentForm,
   calculateTeamRecord,
   getFormColor,
-  loadSchedule,
-  loadSeasons,
-  loadStandings,
 } from "@/lib/dataUtils";
 import Image from "next/image";
+import { supabase } from "@/lib/supabase";
 
 export default function TeamPage() {
   const [selectedCompetition, setSelectedCompetition] = useState("nirsa");
@@ -20,6 +22,7 @@ export default function TeamPage() {
     competitions: [],
     years: [],
   });
+  
   const [standingsData, setStandingsData] = useState({ teams: [] });
   const [scheduleData, setScheduleData] = useState({ games: [] });
   const [rosterData, setRosterData] = useState([]);
@@ -30,22 +33,7 @@ export default function TeamPage() {
   const [loading, setLoading] = useState(true);
   const [seasonDataLoading, setSeasonDataLoading] = useState(false);
 
-  const roster = [
-    {
-      id: 1,
-      name: "Anthony Morales",
-      graduationYear: 2024,
-      position: "Defender",
-      profileImage: "/images/profilepic.svg",
-    },
-    {
-      id: 2,
-      name: "Thomas Garity",
-      graduationYear: 2025,
-      position: "Defender",
-      profileImage: "/images/profilepic.svg",
-    },
-  ];
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function loadInitialData() {
@@ -81,24 +69,88 @@ export default function TeamPage() {
   async function loadSeasonData(competition, year) {
     setSeasonDataLoading(true);
     try {
-      const [standings, schedule] = await Promise.all([
+      const [standings, schedule, roster] = await Promise.all([
         loadStandings(competition, year),
         loadSchedule(competition, year),
+        loadRoster(year),
       ]);
+
+      console.log("roster", roster);
 
       setStandingsData(standings);
       setScheduleData(schedule);
+
+      const mergedRoster = await mergeRosterWithProfiles(roster.players || []);
+      setRosterData(mergedRoster);
 
       const form = calculateRecentForm(schedule.games);
       const record = calculateTeamRecord(schedule.games);
 
       setRecentForm(form);
       setTeamRecord(record);
-      setRosterData(roster);
     } catch (error) {
       console.error("Error loading season data: ", error);
+      setError(
+        `Failed to load data for ${selectedCompetition} ${selectedYear}`
+      );
     } finally {
       setSeasonDataLoading(false);
+    }
+  }
+
+  async function mergeRosterWithProfiles(staticPlayers) {
+    try {
+      const { data: profiles, error } = await supabase
+        .from("profiles")
+        .select("*");
+
+      if (error) {
+        console.error("Error fetching profiles:", error);
+        return staticPlayers.map((player) => ({
+          ...player,
+          isEnhanced: false,
+        }));
+      }
+
+      const profileMap = new Map();
+      profiles.forEach((profile) => {
+        const fullName = `${profile.full_name}`.toLowerCase();
+        console.log(fullName);
+
+        const matchingId = fullName
+          .replace(/\s+/g, "_")
+          .replace(/[^a-z0-9_]/g, "");
+        profileMap.set(matchingId, profile);
+      });
+
+      console.log("profileMap", profileMap);
+
+      return staticPlayers.map((staticPlayer) => {
+        const enhancedProfile = profileMap.get(staticPlayer.id);
+
+        if (enhancedProfile) {
+          return {
+            id: staticPlayer.id,
+            name: `${enhancedProfile.first_name} ${enhancedProfile.last_name}`,
+            graduationYear: enhancedProfile.graduation_year,
+            position: enhancedProfile.position,
+            profileImage:
+              enhancedProfile.profile_image_url || "/images/profilepic.svg",
+            bio: enhancedProfile.bio,
+            isEnhanced: true,
+            supabaseProfile: enhancedProfile,
+          };
+        } else {
+          return {
+            ...staticPlayer,
+            profileImage: "/images/profilepic.svg",
+            isEnhanced: false,
+          };
+        }
+      });
+    } catch (error) {
+      console.error("Error merging roster with profiles:", error);
+      return staticPlayers.map((player) => ({ ...player, isEnhanced: false }));
     }
   }
 
@@ -215,43 +267,68 @@ export default function TeamPage() {
               </div>
             </div>
           )}
+
           {/* Main Content - Vertical Scrollable Layout */}
           <div className="space-y-12">
             {/* Roster Section */}
             <div>
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Roster
+                {selectedYear} Roster
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {rosterData.map((player) => (
-                  <div
-                    key={player.id}
-                    className="bg-white rounded-lg shadow p-4"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
-                        <Image
-                          src={player.profileImage}
-                          alt={player.name}
-                          width={48}
-                          height={48}
-                          className="w-full h-full object-cover"
-                        />
+                {rosterData.length > 0 ? (
+                  rosterData.map((player) => (
+                    <div
+                      key={player.id}
+                      className={`bg-white rounded-lg shadow p-4 ${
+                        player.isEnhanced ? "ring-2 ring-[#A51C30]/20" : ""
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden relative">
+                          <Image
+                            src={player.profileImage}
+                            alt={player.name}
+                            width={48}
+                            height={48}
+                            className="w-full h-full object-cover"
+                          />
+                          {player.isEnhanced && (
+                            <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#A51C30] rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-medium text-gray-900">
+                            {player.name}
+                          </h3>
+                          {player.isEnhanced ? (
+                            <>
+                              <p className="text-sm text-gray-600">
+                                Class of {player.graduationYear}
+                              </p>
+                              <p className="text-sm text-[#A51C30]">
+                                {player.position}
+                              </p>
+                            </>
+                          ) : null}
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-medium text-gray-900">
-                          {player.name}
-                        </h3>
-                        <p className="text-sm text-gray-600">
-                          Class of {player.graduationYear}
-                        </p>
-                        <p className="text-sm text-[#A51C30]">
-                          {player.position}
-                        </p>
-                      </div>
+                      {player.isEnhanced && player.bio && (
+                        <div className="mt-3 pt-3 border-t border-gray-200">
+                          <p className="text-xs text-gray-600 line-clamp-2">
+                            {player.bio}
+                          </p>
+                        </div>
+                      )}
                     </div>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-8 text-gray-500">
+                    No roster data available for {selectedYear}
                   </div>
-                ))}
+                )}
               </div>
             </div>
 
