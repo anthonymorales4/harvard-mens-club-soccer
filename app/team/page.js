@@ -272,7 +272,7 @@ export default function TeamPage() {
                   ))
                 ) : (
                   <div className="col-span-full text-center py-8 text-gray-500">
-                    No roster data available for {selectedYear}
+                    No roster data available
                   </div>
                 )}
               </div>
@@ -283,77 +283,83 @@ export default function TeamPage() {
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
                 Standings
               </h2>
-              <div className="bg-white rounded-lg shadow overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="min-w-full">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Team
-                        </th>
-                        <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          W
-                        </th>
-                        <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          L
-                        </th>
-                        <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          T
-                        </th>
-                        <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          GF
-                        </th>
-                        <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          GA
-                        </th>
-                        <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          GD
-                        </th>
-                        <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Pts
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {standingsData.teams.map((team, index) => (
-                        <tr
-                          key={team.id || index}
-                          className={getStandingsRowStyling(
-                            team,
-                            index,
-                            selectedCompetition
-                          )}
-                        >
-                          <td className="px-4 py-3 text-sm text-gray-900 font-medium">
-                            {team.name}
-                          </td>
-                          <td className="px-3 py-3 text-sm text-gray-500 text-center">
-                            {team.wins}
-                          </td>
-                          <td className="px-3 py-3 text-sm text-gray-500 text-center">
-                            {team.losses}
-                          </td>
-                          <td className="px-3 py-3 text-sm text-gray-500 text-center">
-                            {team.ties}
-                          </td>
-                          <td className="px-3 py-3 text-sm text-gray-500 text-center">
-                            {team.goalsFor}
-                          </td>
-                          <td className="px-3 py-3 text-sm text-gray-500 text-center">
-                            {team.goalsAgainst}
-                          </td>
-                          <td className="px-3 py-3 text-sm text-gray-500 text-center">
-                            {team.goalDifference}
-                          </td>
-                          <td className="px-3 py-3 text-sm text-gray-500 text-center font-semibold">
-                            {team.points}
-                          </td>
+              {standingsData.teams.length > 0 ? (
+                <div className="bg-white rounded-lg shadow overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Team
+                          </th>
+                          <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            W
+                          </th>
+                          <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            L
+                          </th>
+                          <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            T
+                          </th>
+                          <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            GF
+                          </th>
+                          <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            GA
+                          </th>
+                          <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            GD
+                          </th>
+                          <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Pts
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {standingsData.teams.map((team, index) => (
+                          <tr
+                            key={team.id || index}
+                            className={getStandingsRowStyling(
+                              team,
+                              index,
+                              selectedCompetition
+                            )}
+                          >
+                            <td className="px-4 py-3 text-sm text-gray-900 font-medium">
+                              {team.name}
+                            </td>
+                            <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                              {team.wins}
+                            </td>
+                            <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                              {team.losses}
+                            </td>
+                            <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                              {team.ties}
+                            </td>
+                            <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                              {team.goalsFor}
+                            </td>
+                            <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                              {team.goalsAgainst}
+                            </td>
+                            <td className="px-3 py-3 text-sm text-gray-500 text-center">
+                              {team.goalDifference}
+                            </td>
+                            <td className="px-3 py-3 text-sm text-gray-500 text-center font-semibold">
+                              {team.points}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="col-span-full text-center py-8 text-gray-500">
+                  No standings data available
+                </div>
+              )}
             </div>
 
             {/* Schedule */}
@@ -361,83 +367,89 @@ export default function TeamPage() {
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
                 Schedule
               </h2>
-              <div className="bg-white rounded-lg shadow overflow-hidden">
-                <div className="divide-y divide-gray-200">
-                  {scheduleData.games.map((game, index) => {
-                    const isHomeGame =
-                      game.homeTeam === "Harvard University - Crimson" ||
-                      game.homeTeam === "Harvard - Crimson" ||
-                      game.homeTeam === "Harvard University - A" ||
-                      game.homeTeam === "Harvard";
+              {scheduleData.games.length > 0 ? (
+                <div className="bg-white rounded-lg shadow overflow-hidden">
+                  <div className="divide-y divide-gray-200">
+                    {scheduleData.games.map((game, index) => {
+                      const isHomeGame =
+                        game.homeTeam === "Harvard University - Crimson" ||
+                        game.homeTeam === "Harvard - Crimson" ||
+                        game.homeTeam === "Harvard University - A" ||
+                        game.homeTeam === "Harvard";
 
-                    return (
-                      <div
-                        key={game.id || index}
-                        className="p-4 hover:bg-gray-50 transition-colors"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-4">
-                              {/* Game Info */}
-                              <div className="flex-1">
-                                <div className="text-sm font-medium text-gray-900 mb-1">
-                                  {isHomeGame
-                                    ? `${game.homeTeam} vs. ${game.awayTeam}`
-                                    : `${game.awayTeam} @ ${game.homeTeam}`}
-                                  {selectedCompetition === "ivies" && (
-                                    <span
-                                      className={`ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${getGameTypeStyling(
-                                        game.gameType
-                                      )}`}
-                                    >
-                                      {game.gameType}
-                                    </span>
-                                  )}
-                                </div>
-                                <div className="text-xs text-gray-500">
-                                  {game.date} • {game.time}
-                                  {selectedCompetition === "ivies" &&
-                                    game.location && (
-                                      <span className="ml-1">
-                                        • {game.location}
+                      return (
+                        <div
+                          key={game.id || index}
+                          className="p-4 hover:bg-gray-50 transition-colors"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-4">
+                                {/* Game Info */}
+                                <div className="flex-1">
+                                  <div className="text-sm font-medium text-gray-900 mb-1">
+                                    {isHomeGame
+                                      ? `${game.homeTeam} vs. ${game.awayTeam}`
+                                      : `${game.awayTeam} @ ${game.homeTeam}`}
+                                    {selectedCompetition === "ivies" && (
+                                      <span
+                                        className={`ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${getGameTypeStyling(
+                                          game.gameType
+                                        )}`}
+                                      >
+                                        {game.gameType}
                                       </span>
                                     )}
+                                  </div>
+                                  <div className="text-xs text-gray-500">
+                                    {game.date} • {game.time}
+                                    {selectedCompetition === "ivies" &&
+                                      game.location && (
+                                        <span className="ml-1">
+                                          • {game.location}
+                                        </span>
+                                      )}
+                                  </div>
                                 </div>
-                              </div>
 
-                              {/* Score */}
-                              <div className="text-center min-w-[80px]">
-                                {game.score !== null ? (
-                                  <div className="text-lg font-bold text-[#A51C30]">
-                                    {isHomeGame
-                                      ? `${game.score.home} - ${game.score.away}`
-                                      : `${game.score.away} - ${game.score.home}`}
-                                  </div>
-                                ) : (
-                                  <div className="text-sm text-gray-500 font-medium">
-                                    {game.time}
-                                  </div>
-                                )}
-                              </div>
+                                {/* Score */}
+                                <div className="text-center min-w-[80px]">
+                                  {game.score !== null ? (
+                                    <div className="text-lg font-bold text-[#A51C30]">
+                                      {isHomeGame
+                                        ? `${game.score.home} - ${game.score.away}`
+                                        : `${game.score.away} - ${game.score.home}`}
+                                    </div>
+                                  ) : (
+                                    <div className="text-sm text-gray-500 font-medium">
+                                      {game.time}
+                                    </div>
+                                  )}
+                                </div>
 
-                              {/* Result */}
-                              <div className="min-w-[80px] text-right">
-                                <span
-                                  className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold ${getResultStyling(
-                                    game.result
-                                  )}`}
-                                >
-                                  {game.result[0] || "UPCOMING"}
-                                </span>
+                                {/* Result */}
+                                <div className="min-w-[80px] text-right">
+                                  <span
+                                    className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold ${getResultStyling(
+                                      game.result
+                                    )}`}
+                                  >
+                                    {game.result[0] || "UPCOMING"}
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="col-span-full text-center py-8 text-gray-500">
+                  No schedule data available
+                </div>
+              )}
             </div>
           </div>
         </div>
