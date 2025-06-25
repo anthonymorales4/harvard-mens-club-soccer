@@ -1,0 +1,50 @@
+{
+  "season": "2025",
+  "competition": "ivies",
+  "teams": [
+    {
+      "id": 1,
+      "name": "Harvard",
+      "wins": 2,
+      "losses": 1,
+      "ties": 0,
+      "goalsFor": 7,
+      "goalsAgainst": 3,
+      "goalDifference": 4,
+      "points": 6
+    },
+    {
+      "id": 2,
+      "name": "UPenn",
+      "wins": 2,
+      "losses": 1,
+      "ties": 0,
+      "goalsFor": 5,
+      "goalsAgainst": 4,
+      "goalDifference": 1,
+      "points": 6
+    },
+    {
+      "id": 3,
+      "name": "Dartmouth",
+      "wins": 1,
+      "losses": 1,
+      "ties": 0,
+      "goalsFor": 4,
+      "goalsAgainst": 5,
+      "goalDifference": -1,
+      "points": 3
+    },
+    {
+      "id": 4,
+      "name": "Cornell",
+      "wins": 1,
+      "losses": 2,
+      "ties": 0,
+      "goalsFor": 6,
+      "goalsAgainst": 9,
+      "goalDifference": -3,
+      "points": 3
+    }
+  ]
+}

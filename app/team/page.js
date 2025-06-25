@@ -13,6 +13,8 @@ import {
   mergeStaticRosterWithSupabaseProfiles,
   getResultStyling,
   getAcademicYearForCompetition,
+  getStandingsRowStyling,
+  getGameTypeStyling,
 } from "@/lib/dataUtils";
 import Image from "next/image";
 
@@ -316,13 +318,11 @@ export default function TeamPage() {
                       {standingsData.teams.map((team, index) => (
                         <tr
                           key={team.id || index}
-                          className={
-                            team.name === "Harvard University - Crimson" ||
-                            team.name === "Harvard - Crimson" ||
-                            team.name === "Harvard University - A"
-                              ? "bg-[#A51C30]/5"
-                              : ""
-                          }
+                          className={getStandingsRowStyling(
+                            team,
+                            index,
+                            selectedCompetition
+                          )}
                         >
                           <td className="px-4 py-3 text-sm text-gray-900 font-medium">
                             {team.name}
@@ -367,7 +367,8 @@ export default function TeamPage() {
                     const isHomeGame =
                       game.homeTeam === "Harvard University - Crimson" ||
                       game.homeTeam === "Harvard - Crimson" ||
-                      game.homeTeam === "Harvard University - A";
+                      game.homeTeam === "Harvard University - A" ||
+                      game.homeTeam === "Harvard";
 
                     return (
                       <div
@@ -383,9 +384,24 @@ export default function TeamPage() {
                                   {isHomeGame
                                     ? `${game.homeTeam} vs. ${game.awayTeam}`
                                     : `${game.awayTeam} @ ${game.homeTeam}`}
+                                  {selectedCompetition === "ivies" && (
+                                    <span
+                                      className={`ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${getGameTypeStyling(
+                                        game.gameType
+                                      )}`}
+                                    >
+                                      {game.gameType}
+                                    </span>
+                                  )}
                                 </div>
                                 <div className="text-xs text-gray-500">
                                   {game.date} • {game.time}
+                                  {selectedCompetition === "ivies" &&
+                                    game.location && (
+                                      <span className="ml-1">
+                                        • {game.location}
+                                      </span>
+                                    )}
                                 </div>
                               </div>
 

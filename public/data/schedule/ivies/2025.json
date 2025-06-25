@@ -1,0 +1,50 @@
+{
+  "season": "2025",
+  "teamName": "Harvard",
+  "games": [
+    {
+      "id": 1,
+      "homeTeam": "Harvard",
+      "awayTeam": "Princeton",
+      "date": "2025-04-20",
+      "time": "11:30 AM",
+      "location": "Stevenson Field",
+      "gameType": "Semi-Final",
+      "score": { "home": 1, "away": 2 },
+      "result": "LOSS"    
+    },
+    {
+      "id": 2,
+      "homeTeam": "Harvard",
+      "awayTeam": "Dartmouth",
+      "date": "2025-04-20",
+      "time": "9:00 AM",
+      "location": "Stevenson Field",
+      "gameType": "Group Stage",
+      "score": { "home": 2, "away": 1 },
+      "result": "WIN"
+    },
+    {
+      "id": 3,
+      "homeTeam": "UPenn",
+      "awayTeam": "Harvard",
+      "date": "2025-04-19",
+      "time": "6:30 PM",
+      "location": "Berylson Family Fields",
+      "gameType": "Group Stage",
+      "score": { "home": 2, "away": 1 },
+      "result": "LOSS"
+    },
+    {
+      "id": 4,
+      "homeTeam": "Cornell",
+      "awayTeam": "Harvard",
+      "date": "2025-04-19",
+      "time": "4:15 PM",
+      "location": "Berylson Family Fields",
+      "gameType": "Group Stage",
+      "score": { "home": 0, "away": 4 },
+      "result": "WIN"
+    }
+  ]
+}
