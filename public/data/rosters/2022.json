@@ -2,119 +2,90 @@
   "year": "2022",
   "players": [
     {
-      "id": "tomas_arevalo",
       "name": "Tomas Arevalo"
     },
     {
-      "id": "rustin_khosravi",
       "name": "Rustin Khosravi"
     },
     {
-      "id": "alex_rojas",
       "name": "Alex Rojas"
     },
     {
-      "id": "donal_ocofaigh",
       "name": "Donal O'Cofaigh"
     },
     {
-      "id": "sebastian_lindner_liaw",
       "name": "Sebastian Lindner-Liaw"
     },
     {
-      "id": "ayande_joseph",
       "name": "Ayande Joseph"
     },
     {
-      "id": "joseph_doraid",
       "name": "Joseph Doraid"
     },
     {
-      "id": "alexander_kim",
       "name": "Alexander Kim"
     },
     {
-      "id": "alejandro_sanchez",
       "name": "Alejandro Sanchez"
     },
     {
-      "id": "niels_korsgaard",
       "name": "Niels Korsgaard"
     },
     {
-      "id": "clay_oxford",
       "name": "Clay Oxford"
     },
     {
-      "id": "mateos_haile_manas",
       "name": "Mateos Haile-Manas"
     },
     {
-      "id": "timothy_fargiano",
       "name": "Timothy Fargiano"
     },
     {
-      "id": "alex_young",
       "name": "Alex Young"
     },
     {
-      "id": "james_farr",
       "name": "James Farr"
     },
     {
-      "id": "anthony_morales",
       "name": "Anthony Morales"
     },
     {
-      "id": "alexios_stavropoulos",
       "name": "Alexios Stavropoulos"
     },
     {
-      "id": "justin_krayer",
       "name": "Justin Krayer"
     },
     {
-      "id": "joseph_fahn",
       "name": "Joseph Fahn"
     },
     {
-      "id": "charlie_welch",
       "name": "Charlie Welch"
     },
     {
-      "id": "hugo_tierrablanca",
       "name": "Hugo Tierrablanca"
     },
     {
-      "id": "ludovic_ottou",
       "name": "Ludovic Ottou"
     },
     {
-      "id": "seamus_buckley",
       "name": "Seamus Buckley"
     },
     {
-      "id": "cole_price",
       "name": "Cole Price"
     },
     {
-      "id": "thomas_garity",
       "name": "Thomas Garity"
     },
     {
-      "id": "liam_de_monaco",
       "name": "Liam De Monaco"
     },
     {
-      "id": "kostas_tingos",
       "name": "Kostas Tingos"
     },
     {
-      "id": "logan_dick",
       "name": "Logan Dick"
     },
     {
-      "id": "john_phillips",
       "name": "John Phillips"
     }
   ]
