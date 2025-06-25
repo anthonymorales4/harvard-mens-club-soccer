@@ -12,6 +12,7 @@ import {
   getFormColor,
   mergeStaticRosterWithSupabaseProfiles,
   getResultStyling,
+  getAcademicYearForCompetition,
 } from "@/lib/dataUtils";
 import Image from "next/image";
 
@@ -73,7 +74,9 @@ export default function TeamPage() {
         const [standings, schedule, roster] = await Promise.all([
           loadStandings(selectedCompetition, selectedYear),
           loadSchedule(selectedCompetition, selectedYear),
-          loadRoster(selectedYear),
+          loadRoster(
+            getAcademicYearForCompetition(selectedCompetition, selectedYear)
+          ),
         ]);
 
         setStandingsData(standings);
@@ -126,8 +129,6 @@ export default function TeamPage() {
       </>
     );
   }
-
-  console.log("rosterData", rosterData);
 
   return (
     <>
