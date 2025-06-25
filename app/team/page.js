@@ -37,6 +37,9 @@ export default function TeamPage() {
   const [initialDataLoading, setInitialDataLoading] = useState(true);
   const [seasonDataLoading, setSeasonDataLoading] = useState(false);
 
+  const [showAllPlayers, setShowAllPlayers] = useState(false);
+  const playersPerPage = 12;
+
   const [error, setError] = useState(null);
 
   // 1. Load seasons configuration on render and set defaults
@@ -70,6 +73,7 @@ export default function TeamPage() {
     async function loadSeasonData() {
       setSeasonDataLoading(true);
       setError(null);
+      setShowAllPlayers(false);
 
       try {
         // Load all data in parallel
@@ -232,50 +236,65 @@ export default function TeamPage() {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {rosterData.length > 0 ? (
-                  rosterData.map((player) => (
-                    <div
-                      key={player.name}
-                      className="bg-white rounded-lg shadow p-4"
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden relative">
-                          <Image
-                            src={player.profileImage}
-                            alt={player.name}
-                            width={48}
-                            height={48}
-                            className="w-full h-full object-cover"
-                          />
-                          {player.isProfileCreated && (
-                            <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#A51C30] rounded-full flex items-center justify-center">
-                              <div className="w-2 h-2 bg-white rounded-full"></div>
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-medium text-gray-900">
-                            {player.name}
-                          </h3>
-                          {player.isProfileCreated ? (
-                            <>
-                              <p className="text-sm text-gray-600">
-                                Class of {player.graduationYear}
-                              </p>
-                              <p className="text-sm text-[#A51C30]">
-                                {player.position}
-                              </p>
-                            </>
-                          ) : null}
+                  rosterData
+                    .slice(
+                      0,
+                      showAllPlayers ? rosterData.length : playersPerPage
+                    )
+                    .map((player) => (
+                      <div
+                        key={player.name}
+                        className="bg-white rounded-lg shadow p-4"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden relative">
+                            <Image
+                              src={player.profileImage}
+                              alt={player.name}
+                              width={48}
+                              height={48}
+                              className="w-full h-full object-cover"
+                            />
+                            {player.isProfileCreated && (
+                              <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#A51C30] rounded-full flex items-center justify-center">
+                                <div className="w-2 h-2 bg-white rounded-full"></div>
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-medium text-gray-900">
+                              {player.name}
+                            </h3>
+                            {player.isProfileCreated ? (
+                              <>
+                                <p className="text-sm text-gray-600">
+                                  Class of {player.graduationYear}
+                                </p>
+                                <p className="text-sm text-[#A51C30]">
+                                  {player.position}
+                                </p>
+                              </>
+                            ) : null}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    ))
                 ) : (
                   <div className="col-span-full text-center py-8 text-gray-500">
                     No roster data available
                   </div>
                 )}
               </div>
+              {rosterData.length > playersPerPage && (
+                <div className="text-right mt-6">
+                  <button
+                    onClick={() => setShowAllPlayers(!showAllPlayers)}
+                    className="px-4 py-2 bg-[#A51C30] text-white rounded-md hover:bg-[#8A1726] transition-colors"
+                  >
+                    {showAllPlayers ? "Show Less" : "Show All"}
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Standings */}
