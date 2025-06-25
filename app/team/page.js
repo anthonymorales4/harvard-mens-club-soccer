@@ -423,11 +423,11 @@ export default function TeamPage() {
                               {/* Result */}
                               <div className="min-w-[80px] text-right">
                                 <span
-                                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getResultStyling(
+                                  className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold ${getResultStyling(
                                     game.result
                                   )}`}
                                 >
-                                  {game.result || "UPCOMING"}
+                                  {game.result[0] || "UPCOMING"}
                                 </span>
                               </div>
                             </div>
