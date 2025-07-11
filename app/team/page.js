@@ -42,7 +42,7 @@ export default function TeamPage() {
 
   const [error, setError] = useState(null);
 
-  // 1. Load seasons configuration on render and set defaults
+  // Load seasons configuration on render and set defaults
   useEffect(() => {
     async function loadInitialData() {
       try {
@@ -66,7 +66,7 @@ export default function TeamPage() {
     loadInitialData();
   }, []);
 
-  // 2. Load season data when competition/year changes (after initial load)
+  // Load season data when competition/year changes (after initial load)
   useEffect(() => {
     if (!selectedCompetition && !selectedYear && initialDataLoading) return;
 
