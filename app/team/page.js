@@ -255,11 +255,6 @@ export default function TeamPage() {
                               height={48}
                               className="w-full h-full object-cover"
                             />
-                            {player.isProfileCreated && (
-                              <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#A51C30] rounded-full flex items-center justify-center">
-                                <div className="w-2 h-2 bg-white rounded-full"></div>
-                              </div>
-                            )}
                           </div>
                           <div className="flex-1">
                             <h3 className="font-medium text-gray-900">

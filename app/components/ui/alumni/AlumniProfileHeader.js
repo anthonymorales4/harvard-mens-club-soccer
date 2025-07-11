@@ -13,9 +13,8 @@ export default function AlumniProfileHeader({ profile }) {
           <Image
             src={profile_image_url}
             alt={name}
-            width={120}
-            height={120}
-            className="rounded-full object-cover"
+            fill
+            className="object-cover"
           />
         </div>
 
