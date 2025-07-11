@@ -14,8 +14,8 @@ export default function AlumniSearchAndFilters({
   function clearFilters() {
     setFilters({
       house: "",
-      finalClub: "",
-      graduationYear: "",
+      final_club: "",
+      graduation_year: "",
     });
     setSearchTerm("");
   }
@@ -69,19 +69,19 @@ export default function AlumniSearchAndFilters({
               Final Club
             </label>
             <select
-              value={filters.finalClub}
+              value={filters.final_club}
               onChange={(event) =>
                 setFilters((prev) => ({
                   ...prev,
-                  finalClub: event.target.value,
+                  final_club: event.target.value,
                 }))
               }
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-[#A51C30] focus:border-[#A51C30]"
             >
               <option value="">All Final Clubs</option>
-              {finalClubs.map((finalClub) => (
-                <option key={finalClub} value={finalClub}>
-                  {finalClub}
+              {finalClubs.map((final_club) => (
+                <option key={final_club} value={final_club}>
+                  {final_club}
                 </option>
               ))}
             </select>
@@ -93,11 +93,11 @@ export default function AlumniSearchAndFilters({
               Graduation Year
             </label>
             <select
-              value={filters.graduationYear}
+              value={filters.graduation_year}
               onChange={(event) =>
                 setFilters((prev) => ({
                   ...prev,
-                  graduationYear: event.target.value,
+                  graduation_year: event.target.value,
                 }))
               }
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-[#A51C30] focus:border-[#A51C30]"

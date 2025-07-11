@@ -37,9 +37,9 @@ export default function AlumniCard({ alumni, onClick }) {
       onClick={onClick}
     >
       <div className="h-48 relative">
-        {alumni.profileImageUrl ? (
+        {alumni.profile_image_url ? (
           <Image
-            src={alumni.profileImageUrl}
+            src={alumni.profile_image_url}
             alt={alumni.name}
             fill
             className="object-cover"
@@ -61,14 +61,14 @@ export default function AlumniCard({ alumni, onClick }) {
       <div className="p-4">
         <h3 className="font-semibold text-gray-900">{alumni.name}</h3>
         <p className="text-sm text-gray-600">
-          Class of {alumni.graduationYear}
+          Class of {alumni.graduation_year}
         </p>
         {alumni.position && (
           <p className="text-sm text-gray-500">{alumni.position}</p>
         )}
-        {alumni.currentJob && alumni.currentCompany && (
+        {alumni.current_job && alumni.current_company && (
           <p className="text-sm text-[#A51C30] mt-2 font-medium">
-            {alumni.currentJob} at {alumni.currentCompany}
+            {alumni.current_job} at {alumni.current_company}
           </p>
         )}
       </div>

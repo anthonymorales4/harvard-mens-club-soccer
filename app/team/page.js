@@ -249,7 +249,7 @@ export default function TeamPage() {
                         <div className="flex items-center space-x-3">
                           <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden relative">
                             <Image
-                              src={player.profileImage}
+                              src={player.profile_image_url}
                               alt={player.name}
                               width={48}
                               height={48}
@@ -268,7 +268,7 @@ export default function TeamPage() {
                             {player.isProfileCreated ? (
                               <>
                                 <p className="text-sm text-gray-600">
-                                  Class of {player.graduationYear}
+                                  Class of {player.graduation_year}
                                 </p>
                                 <p className="text-sm text-[#A51C30]">
                                   {player.position}

@@ -9,7 +9,8 @@ export default function ProfileImageUpload({ profile, onImageUpdate }) {
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
 
-  const profileImage = profile?.profile_image_url || "/images/profilepic.svg";
+  const profile_image_url =
+    profile?.profile_image_url || "/images/profilepic.svg";
 
   function validateFile(file) {
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
@@ -141,7 +142,7 @@ export default function ProfileImageUpload({ profile, onImageUpdate }) {
     <div className="relative group">
       <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-[#A51C30]">
         <Image
-          src={profileImage}
+          src={profile_image_url}
           alt={profile?.full_name}
           fill
           className="object-cover"

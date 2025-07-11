@@ -17,8 +17,8 @@ export default function AlumniPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
     house: "",
-    finalClub: "",
-    graduationYear: "",
+    final_club: "",
+    graduation_year: "",
   });
   const [selectedAlumni, setSelectedAlumni] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -79,9 +79,9 @@ export default function AlumniPage() {
         person.name || "",
         person.concentration || "",
         person.hometown || "",
-        person.currentJob || "",
-        person.currentLocation || "",
-        person.currentCompany || "",
+        person.current_job || "",
+        person.current_location || "",
+        person.current_company || "",
       ]
         .join(" ")
         .toLowerCase();
@@ -95,9 +95,9 @@ export default function AlumniPage() {
     return alumni.filter((person) => {
       return (
         (!filters.house || person.house === filters.house) &&
-        (!filters.finalClub || person.finalClub === filters.finalClub) &&
-        (!filters.graduationYear ||
-          person.graduationYear?.toString() === filters.graduationYear)
+        (!filters.final_club || person.final_club === filters.final_club) &&
+        (!filters.graduation_year ||
+          person.graduation_year?.toString() === filters.graduation_year)
       );
     });
   }
